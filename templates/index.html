@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+    <title>Mortgager</title>
+</head>
+<body>
+    <div class="mortgager">
+        <div class="input-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" value="425000.0">
+        </div>
+
+        <div class="input-group">
+            <label for="num_of_months">Number of months:</label>
+            <input type="number" id="num_of_months" value="360">
+        </div>
+
+        <div class="input-group">
+            <label for="interest_rate">Interest rate (%):</label>
+            <input type="number" id="interest_rate" value="4.0">
+        </div>
+
+        <div class="input-group">
+            <label for="housing_inflation">Housing market inflation:</label>
+            <input type="number" id="housing_inflation" value="3.0">
+        </div>
+
+        <div class="input-group">
+            <label for="rent_month">Rent per month:</label>
+            <input type="number" id="rent_month" value="1800.0">
+        </div>
+
+        <div class="input-group">
+            <label for="initial_expenses">Initial overhead expenses:</label>
+            <input type="number" id="initial_expenses" value="8000">
+        </div>
+
+        <div class="input-group">
+            <label for="rent_increase">Rent annual increase (%):</label>
+            <input type="number" id="rent_increase" value="8.0">
+        </div>
+
+        <button onclick="submitForm()">Calculate</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function submitForm() {
+            var price = document.getElementById("price").value;
+            var num_of_months = document.getElementById("num_of_months").value;
+            var interest_rate = document.getElementById("interest_rate").value;
+            var housing_inflation = document.getElementById("housing_inflation").value;
+            var rent_month = document.getElementById("rent_month").value;
+            var initial_expenses = document.getElementById("initial_expenses").value;
+            var rent_increase = document.getElementById("rent_increase").value;
+
+            // Make an AJAX request to the server
+            fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'price=' + encodeURIComponent(price) + '&num_of_months=' + encodeURIComponent(num_of_months)
+                    + '&interest_rate=' + encodeURIComponent(interest_rate)
+                    + '&housing_inflation=' + encodeURIComponent(housing_inflation)
+                    + '&rent_month=' + encodeURIComponent(rent_month)
+                    + '&initial_expenses=' + encodeURIComponent(initial_expenses)
+                    + '&rent_increase=' + encodeURIComponent(rent_increase),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    displayTable(data.table);
+                }
+            });
+        }
+
+        // Function to display the table
+        function displayTable(tableData) {
+            console.log('Received table data:', tableData);
+            var resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = ''; // Clear previous content
+
+            // Create a table element
+            var tableHTML = '<table>'
+
+            // Add headers to the table
+            var headers = tableData[0];
+            tableHTML += '<tr>';
+            for (var i = 0; i < headers.length; i++) {
+                tableHTML += '<th>' + headers[i] + '</th>';
+            }
+            tableHTML += '</tr>';
+
+            // Add data rows to the table
+            for (var i = 1; i < tableData.length; i++) {
+                tableHTML += '<tr>';
+                for (var j = 0; j < tableData[i].length; j++) {
+                    tableHTML += '<td>' + tableData[i][j] + '</td>';
+                }
+                tableHTML += '</tr>';
+            }
+
+            // Close the table
+            tableHTML += '</table>';
+
+            // Set the table HTML as the content of the resultDiv
+            resultDiv.innerHTML = tableHTML;
+        }
+    </script>
+</body>
+</html>

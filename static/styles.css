@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.mortgager {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+input {
+    margin-left: 5px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+#result {
+    display: block;
+    min-height: 400px; /* Adjust the height based on your needs */
+    overflow: auto;
+}
