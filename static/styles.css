@@ -7,14 +7,20 @@ body {
 }
 
 .mortgager {
-    text-align: center;
+    text-align: left;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 .input-group {
+    display: flex;
+    align-items: left;
     margin-bottom: 10px;
+}
+
+label {
+    margin-right: 10px;
 }
 
 input {
@@ -26,7 +32,29 @@ button {
 }
 
 #result {
-    display: block;
     min-height: 400px; /* Adjust the height based on your needs */
     overflow: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.even-row {
+    background-color: #f9f9f9; /* Even row color */
+}
+
+.odd-row {
+    background-color: #ffffff; /* Odd row color */
 }

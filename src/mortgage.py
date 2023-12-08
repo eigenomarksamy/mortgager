@@ -27,39 +27,6 @@ def compute_current_rent(rent_to_compare: float, rent_annual_increase: float, mo
 def compute_estate_market_value(estate_worth: float, market_increase: float) -> float:
     return estate_worth * (1 + convert_percent(market_increase) / 12)
 
-# def calculate_mortgage_table(price: float, num_of_months: int, interest_rate: float,
-#                              housing_inflation: float, rent_month: float,
-#                              initial_expenses: float, rent_increase: float) -> list:
-#     # Periode, Totale schuld, Te betalen rente, Te betalen aflossing, Restschuld, Totaal betaalde huur, Totaal betaalde rente, Huur netto winst, Landgoed waarde, Winst verkopen
-#     # month  , total debt   , payable interest, repayment due    , residual debt, total paid rent     , total paid interest  , rent net profit , estate value   , selling profit
-#     lst = []
-#     dct = {}
-#     dct['period'] = 1
-#     dct['total_debt'] = price
-#     dct['payable_interest'] = compute_interest_to_be_paid(dct['total_debt'], interest_rate)
-#     total_pmt = -calculate_pmt(price, convert_percent(interest_rate), num_of_months)
-#     dct['repayment_due'] = compute_repayment(total_pmt, dct['payable_interest'])
-#     dct['residual_debt'] = compute_residual_debt(dct['total_debt'], dct['repayment_due'])
-#     dct['total_paid_rent'] = rent_month
-#     dct['total_paid_interest'] = dct['payable_interest']
-#     dct['rent_net_profit'] = compute_total_gain_for_rent(dct['total_paid_interest'], initial_expenses, dct['total_paid_rent'])
-#     dct['estate_value'] = price
-#     dct['selling_profit'] = compute_selling_gain(dct['estate_value'], dct['total_debt'], initial_expenses)
-#     lst.append(dct)
-#     dct['period'] += 1
-#     for dct['period'] in range(num_of_months):
-#         dct['total_debt'] -= dct['repayment_due']
-#         dct['payable_interest'] = compute_interest_to_be_paid(dct['total_debt'], interest_rate)
-#         dct['repayment_due'] = compute_repayment(total_pmt, dct['payable_interest'])
-#         dct['residual_debt'] = compute_residual_debt(dct['total_debt'], dct['repayment_due'])
-#         dct['total_paid_rent'] += compute_current_rent(rent_month, convert_percent(rent_increase), dct['period'])
-#         dct['total_paid_interest'] += dct['payable_interest']
-#         dct['rent_net_profit'] = compute_total_gain_for_rent(dct['total_paid_interest'], initial_expenses, dct['total_paid_rent'])
-#         dct['estate_value'] = compute_estate_market_value(dct['estate_value'], convert_percent(housing_inflation))
-#         dct['selling_profit'] = compute_selling_gain(dct['estate_value'], dct['total_debt'], initial_expenses)
-#         lst.append(dct)
-#     return lst
-
 def calculate_mortgage_table(price: float, num_of_months: int, interest_rate: float,
                              housing_inflation: float, rent_month: float,
                              initial_expenses: float, rent_increase: float) -> list:

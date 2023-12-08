@@ -98,11 +98,14 @@
             }
             tableHTML += '</tr>';
 
-            // Add data rows to the table
+            // Add data rows to the table with alternating colors
             for (var i = 1; i < tableData.length; i++) {
-                tableHTML += '<tr>';
+                var rowColor = i % 2 === 0 ? 'even-row' : 'odd-row';
+                tableHTML += '<tr class="' + rowColor + '">';
                 for (var j = 0; j < tableData[i].length; j++) {
-                    tableHTML += '<td>' + tableData[i][j] + '</td>';
+                    var value = tableData[i][j];
+                    var formattedValue = value % 1 !== 0 ? parseFloat(value).toFixed(3) : value;
+                    tableHTML += '<td>' + formattedValue + '</td>';
                 }
                 tableHTML += '</tr>';
             }
