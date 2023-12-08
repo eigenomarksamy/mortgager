@@ -77,13 +77,13 @@
                     alert(data.error);
                 } else {
                     displayTable(data.table);
+                    displayText(data.text);
                 }
             });
         }
 
         // Function to display the table
         function displayTable(tableData) {
-            console.log('Received table data:', tableData);
             var resultDiv = document.getElementById("result");
             resultDiv.innerHTML = ''; // Clear previous content
 
@@ -115,6 +115,18 @@
 
             // Set the table HTML as the content of the resultDiv
             resultDiv.innerHTML = tableHTML;
+        }
+
+        function displayText(text) {
+            var textDiv = document.createElement("div");
+            textDiv.id = 'text';
+            var body = document.createElement('p');
+            body.textContent = text;
+            textDiv.appendChild(body);
+            textDiv.style.position = 'absolute';
+            textDiv.style.top = '100px'; // Adjust the top position as needed
+            textDiv.style.right = '300px'; // Adjust the left position as needed
+            document.body.appendChild(textDiv);
         }
     </script>
 </body>
