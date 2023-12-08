@@ -27,6 +27,14 @@ def compute_current_rent(rent_to_compare: float, rent_annual_increase: float, mo
 def compute_estate_market_value(estate_worth: float, market_increase: float) -> float:
     return estate_worth * (1 + convert_percent(market_increase) / 12)
 
+def get_idx_of_sign_change(list_to_search: list, key: str) -> int:
+    for i in range(1, len(list_to_search)):
+        if list_to_search[i][key] < 0 and list_to_search[i - 1][key] >= 0:
+            return i + 1
+        elif list_to_search[i][key] > 0 and list_to_search[i - 1][key] <= 0:
+            return i + 1
+    return -1
+
 def calculate_mortgage_table(price: float, num_of_months: int, interest_rate: float,
                              housing_inflation: float, rent_month: float,
                              initial_expenses: float, rent_increase: float) -> list:
@@ -67,8 +75,13 @@ def calculate_mortgage_table(price: float, num_of_months: int, interest_rate: fl
         total_paid_interest = dct['total_paid_interest']
         estate_value = dct['estate_value']
         lst.append(dct)
-
     return lst
+
+def get_rent_idx(mortgage_table: list) -> int:
+    return get_idx_of_sign_change(mortgage_table, 'rent_net_profit')
+
+def get_sell_idx(mortgage_table: list) -> int:
+    return get_idx_of_sign_change(mortgage_table, 'selling_profit')
 
 def generate_headers() -> list:
     return ["Month", "Total debt", "Payable interest", "Repayment due",

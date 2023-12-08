@@ -1,7 +1,8 @@
 import random
 from flask import Flask, render_template, request, jsonify
 
-from src.mortgage import calculate_mortgage_table, generate_headers
+from src.mortgage import calculate_mortgage_table, generate_headers, \
+    get_rent_idx, get_sell_idx
 
 app = Flask(__name__)
 
@@ -31,11 +32,22 @@ def calculate():
     except ValueError:
         return jsonify({'error': 'Invalid input. Please enter valid numbers.'}), 400
 
-    result_lst = calculate_mortgage_table(price, num_of_months, interest_rate, housing_inflation, rent_month, initial_expenses, rent_increase)
+    result_lst = calculate_mortgage_table(price, num_of_months, interest_rate,
+                                          housing_inflation, rent_month,
+                                          initial_expenses, rent_increase)
+
+    rent_txt = f"Rent breakeven month: {get_rent_idx(result_lst)}"
+    sell_txt = f"Sell breakeven month: {get_sell_idx(result_lst)}"
+    text = f"*{rent_txt}  *{sell_txt}"
 
     table = generate_table(result_lst)
 
-    return jsonify({'table': table})
+    response_data = {
+        'table': table,
+        'text': text
+    }
+
+    return jsonify(response_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
