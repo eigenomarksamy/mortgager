@@ -1,10 +1,9 @@
-import random
 from flask import Flask, render_template, request, jsonify
 
 from src.mortgage import calculate_mortgage_table, generate_headers, \
     get_rent_idx, get_sell_idx
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 def generate_table(lst_dct):
     table = []
