@@ -4,6 +4,8 @@ A program to calculate mortgage
 
 ## Run
 
+Whatever build path you're choosing, you'll go to [`127.0.0.1:5000`](http://127.0.0.1:5000/)
+
 ### Native
 
 Use your favourite OS to run python3 natively.
@@ -13,8 +15,6 @@ $ pip install --upgrade pip
 $ pip install -r requirements.txt
 $ python3 -m flask run
 ```
-
-Go to `http://127.0.0.1:5000/`
 
 ### Virtual environment
 
@@ -28,8 +28,6 @@ $ pip install -r requirements.txt
 $ python3 -m flask run
 ```
 
-Go to `http://127.0.0.1:5000/`
-
 ### Docker (Windows - WSL)
 
 Make sure the Docker windows up is running.
@@ -37,5 +35,3 @@ Make sure the Docker windows up is running.
 ```Shell
 $ docker compose up --build
 ```
-
-Go to `http://127.0.0.1:5000/`
