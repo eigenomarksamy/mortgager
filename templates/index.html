@@ -8,45 +8,52 @@
     <title>Mortgager</title>
 </head>
 <body>
-    <div class="mortgager">
-        <div class="input-group">
-            <label for="price">Price:</label>
-            <input type="number" id="price" value="425000.0">
+    <div class="container">
+        <div class="mortgager">
+            <div class="input-group">
+                <label for="price">Price:</label>
+                <input type="number" id="price" value="425000.0">
+            </div>
+
+            <div class="input-group">
+                <label for="num_of_months">Number of months:</label>
+                <input type="number" id="num_of_months" value="360">
+            </div>
+
+            <div class="input-group">
+                <label for="interest_rate">Interest rate (%):</label>
+                <input type="number" id="interest_rate" value="4.0">
+            </div>
+
+            <div class="input-group">
+                <label for="housing_inflation">Housing market inflation:</label>
+                <input type="number" id="housing_inflation" value="3.0">
+            </div>
+
+            <div class="input-group">
+                <label for="rent_month">Rent per month:</label>
+                <input type="number" id="rent_month" value="1800.0">
+            </div>
+
+            <div class="input-group">
+                <label for="initial_expenses">Initial overhead expenses:</label>
+                <input type="number" id="initial_expenses" value="8000">
+            </div>
+
+            <div class="input-group">
+                <label for="rent_increase">Rent annual increase (%):</label>
+                <input type="number" id="rent_increase" value="8.0">
+            </div>
+
+            <button onclick="submitForm()">Calculate</button>
+            <div id="dynamic-elements">
+                <!-- Fixed text elements -->
+                <p>Rent breakeven month: <span id="textAValue"></span></p>
+                <p>Sell breakeven month: <span id="textBValue"></span></p>
+            </div>
+
+            <div id="result"></div>
         </div>
-
-        <div class="input-group">
-            <label for="num_of_months">Number of months:</label>
-            <input type="number" id="num_of_months" value="360">
-        </div>
-
-        <div class="input-group">
-            <label for="interest_rate">Interest rate (%):</label>
-            <input type="number" id="interest_rate" value="4.0">
-        </div>
-
-        <div class="input-group">
-            <label for="housing_inflation">Housing market inflation:</label>
-            <input type="number" id="housing_inflation" value="3.0">
-        </div>
-
-        <div class="input-group">
-            <label for="rent_month">Rent per month:</label>
-            <input type="number" id="rent_month" value="1800.0">
-        </div>
-
-        <div class="input-group">
-            <label for="initial_expenses">Initial overhead expenses:</label>
-            <input type="number" id="initial_expenses" value="8000">
-        </div>
-
-        <div class="input-group">
-            <label for="rent_increase">Rent annual increase (%):</label>
-            <input type="number" id="rent_increase" value="8.0">
-        </div>
-
-        <button onclick="submitForm()">Calculate</button>
-
-        <div id="result"></div>
     </div>
 </body>
 </html>

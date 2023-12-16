@@ -35,15 +35,15 @@ def calculate():
                                           housing_inflation, rent_month,
                                           initial_expenses, rent_increase)
 
-    rent_txt = f"Rent breakeven month: {get_rent_idx(result_lst)}"
-    sell_txt = f"Sell breakeven month: {get_sell_idx(result_lst)}"
-    text = f"*{rent_txt}  *{sell_txt}"
+    rent_be_value = get_rent_idx(result_lst)
+    sell_be_value = get_sell_idx(result_lst)
 
     table = generate_table(result_lst)
 
     response_data = {
         'table': table,
-        'text': text
+        'rent_be_value': rent_be_value,
+        'sell_be_value': sell_be_value
     }
 
     return jsonify(response_data)
