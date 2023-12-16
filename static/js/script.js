@@ -27,7 +27,7 @@ function submitForm() {
             alert(data.error);
         } else {
             displayTable(data.table);
-            displayText(data.text);
+            displayText(data.rent_txt, data.sell_txt);
         }
     });
 }
@@ -67,14 +67,23 @@ function displayTable(tableData) {
     resultDiv.innerHTML = tableHTML;
 }
 
-function displayText(text) {
-    var textDiv = document.createElement("div");
-    textDiv.id = 'text';
-    var body = document.createElement('p');
-    body.textContent = text;
-    textDiv.appendChild(body);
-    textDiv.style.position = 'absolute';
-    textDiv.style.top = '100px'; // Adjust the top position as needed
-    textDiv.style.right = '300px'; // Adjust the left position as needed
-    document.body.appendChild(textDiv);
+function displayText(text1, text2) {
+    var textDiv1 = document.createElement("div");
+    textDiv1.id = 'text1';
+    var textElm1 = document.createElement('p');
+    textElm1.textContent = text1;
+    textDiv1.appendChild(textElm1);
+    textDiv1.style.position = 'absolute';
+    textDiv1.style.top = '100px'; // Adjust the top position as needed
+    textDiv1.style.right = '300px'; // Adjust the left position as needed
+    document.body.appendChild(textDiv1);
+    var textDiv2 = document.createElement("div");
+    textDiv2.id = 'text2';
+    var textElm2 = document.createElement('p');
+    textElm2.textContent = text2;
+    textDiv2.appendChild(textElm2);
+    textDiv2.style.position = 'absolute';
+    textDiv2.style.top = '200px'; // Adjust the top position as needed
+    textDiv2.style.right = '300px'; // Adjust the left position as needed
+    document.body.appendChild(textDiv2);
 }

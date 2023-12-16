@@ -37,13 +37,13 @@ def calculate():
 
     rent_txt = f"Rent breakeven month: {get_rent_idx(result_lst)}"
     sell_txt = f"Sell breakeven month: {get_sell_idx(result_lst)}"
-    text = f"*{rent_txt}  *{sell_txt}"
 
     table = generate_table(result_lst)
 
     response_data = {
         'table': table,
-        'text': text
+        'rent_txt': rent_txt,
+        'sell_txt': sell_txt
     }
 
     return jsonify(response_data)
