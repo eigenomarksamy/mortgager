@@ -27,7 +27,7 @@ function submitForm() {
             alert(data.error);
         } else {
             displayTable(data.table);
-            displayText(data.rent_txt, data.sell_txt);
+            displayBreakevenData(data.rent_be_value, data.sell_be_value);
         }
     });
 }
@@ -67,23 +67,7 @@ function displayTable(tableData) {
     resultDiv.innerHTML = tableHTML;
 }
 
-function displayText(text1, text2) {
-    var textDiv1 = document.createElement("div");
-    textDiv1.id = 'text1';
-    var textElm1 = document.createElement('p');
-    textElm1.textContent = text1;
-    textDiv1.appendChild(textElm1);
-    textDiv1.style.position = 'absolute';
-    textDiv1.style.top = '100px'; // Adjust the top position as needed
-    textDiv1.style.right = '300px'; // Adjust the left position as needed
-    document.body.appendChild(textDiv1);
-    var textDiv2 = document.createElement("div");
-    textDiv2.id = 'text2';
-    var textElm2 = document.createElement('p');
-    textElm2.textContent = text2;
-    textDiv2.appendChild(textElm2);
-    textDiv2.style.position = 'absolute';
-    textDiv2.style.top = '200px'; // Adjust the top position as needed
-    textDiv2.style.right = '300px'; // Adjust the left position as needed
-    document.body.appendChild(textDiv2);
+function displayBreakevenData(beValue1, beValue2) {
+    document.getElementById('textAValue').textContent = beValue1;
+    document.getElementById('textBValue').textContent = beValue2;
 }
