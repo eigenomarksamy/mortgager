@@ -75,28 +75,6 @@ th {
     background-color: #ffffff; /* Odd row color */
 }
 
-/* #dynamic-elements {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding: 20px;
-}
-
 #textAValue, #textBValue {
     margin-left: 5px;
 }
-
-#boxA, #boxB {
-    width: 50px;
-    height: 50px;
-    margin-top: 10px;
-}
-
-#boxA {
-    background-color: lightblue;
-}
-
-#boxB {
-    background-color: lightgreen;
-} */
