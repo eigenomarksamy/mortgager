@@ -35,3 +35,20 @@ Make sure the Docker windows up is running.
 ```Shell
 $ docker compose up --build
 ```
+
+## Dev Plan
+
+- Split the initial costs
+  - Resources include and not exclusive to:
+    - [resource1](https://www.hanno.nl/expat-mortgages/tax-return-and-homeownership-in-the-netherlands/)
+    - [resource2](https://www.iamexpat.nl/housing/buy-house-netherlands/taxes-costs-fees)
+    - [resource3](https://www.iamexpat.nl/housing/dutch-mortgages/fees-costs-tax-relief-netherlands)
+- Add first home checkbox
+  - Maximum allowed price
+  - Rent allowance
+  - Tax return
+- Add return of rent
+  - Long-term
+  - Short-term
+- Add huispedia API integration
+
