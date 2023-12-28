@@ -24,6 +24,9 @@ class Mortgage:
         if self._is_first_estate:
             if self._price > MortgageConf.FIRST_PROPERTY_MAX_VALUE:
                 return False
+        else:
+            transfer_tax = self._price * 0.02
+            self._price += transfer_tax
         return True
     
     def generate_headers(self) -> list:
