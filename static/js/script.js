@@ -7,6 +7,7 @@ function submitForm() {
     var rent_month = document.getElementById("rent_month").value;
     var initial_expenses = document.getElementById("initial_expenses").value;
     var rent_increase = document.getElementById("rent_increase").value;
+    var is_first_estate = document.getElementById("is_first_estate").checked;
 
     // Make an AJAX request to the server
     fetch('/calculate', {
@@ -14,12 +15,14 @@ function submitForm() {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'price=' + encodeURIComponent(price) + '&num_of_months=' + encodeURIComponent(num_of_months)
+        body: 'price=' + encodeURIComponent(price)
+            + '&num_of_months=' + encodeURIComponent(num_of_months)
             + '&interest_rate=' + encodeURIComponent(interest_rate)
             + '&housing_inflation=' + encodeURIComponent(housing_inflation)
             + '&rent_month=' + encodeURIComponent(rent_month)
             + '&initial_expenses=' + encodeURIComponent(initial_expenses)
-            + '&rent_increase=' + encodeURIComponent(rent_increase),
+            + '&rent_increase=' + encodeURIComponent(rent_increase)
+            + '&is_first_estate=' + encodeURIComponent(is_first_estate),
     })
     .then(response => response.json())
     .then(data => {

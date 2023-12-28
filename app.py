@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 
 from src.mortgage import calculate_mortgage_table, generate_headers, \
     get_rent_idx, get_sell_idx
+from src.utils import convert_str_bool
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
@@ -28,6 +29,8 @@ def calculate():
         rent_month = float(request.form['rent_month'])
         initial_expenses = float(request.form['initial_expenses'])
         rent_increase = float(request.form['rent_increase'])
+        is_first_estate = convert_str_bool(request.form['is_first_estate'])
+
     except ValueError:
         return jsonify({'error': 'Invalid input. Please enter valid numbers.'}), 400
 

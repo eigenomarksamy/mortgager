@@ -1,5 +1,19 @@
 import math
 
+class Mortgage:
+    def __init__(self, price: float, num_of_months: int, interest_rate: float,
+                 housing_inflation: float, rent_month: float,
+                 initial_expenses: float, rent_increase: float,
+                 is_first_estate: bool) -> None:
+        self._price = price
+        self._num_of_months = num_of_months
+        self._interest_rate = interest_rate
+        self._housing_inflation = housing_inflation
+        self._rent_month = rent_month
+        self._initial_expenses = initial_expenses
+        self._rent_increase = rent_increase
+        self._is_first_estate = is_first_estate
+
 def convert_percent(num: float) -> float:
     return num / 100
 
