@@ -29,10 +29,19 @@ function submitForm() {
         if (data.error) {
             alert(data.error);
         } else {
-            displayTable(data.table);
+            if ('table' in data) {
+                displayTable(data.table);
+            } else {
+                clearTable();
+            }
             displayBreakevenData(data.rent_be_value, data.sell_be_value);
         }
     });
+}
+
+function clearTable() {
+    var resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = ''; // Clear the table content
 }
 
 // Function to display the table
@@ -71,6 +80,12 @@ function displayTable(tableData) {
 }
 
 function displayBreakevenData(beValue1, beValue2) {
-    document.getElementById('textAValue').textContent = beValue1;
-    document.getElementById('textBValue').textContent = beValue2;
+    document.getElementById('textAValue').textContent = 'NA';
+    document.getElementById('textBValue').textContent = 'NA';
+    if (beValue1 >= 0) {
+        document.getElementById('textAValue').textContent = beValue1;
+    }
+    if (beValue2 >= 0) {
+        document.getElementById('textBValue').textContent = beValue2;
+    }
 }

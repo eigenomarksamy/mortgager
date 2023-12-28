@@ -1,19 +1,26 @@
 from flask import Flask, render_template, request, jsonify
 
-from src.mortgage import calculate_mortgage_table, generate_headers, \
-    get_rent_idx, get_sell_idx
+from src.mortgage import Mortgage
 from src.utils import convert_str_bool
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-def generate_table(lst_dct):
-    table = []
-    headers = generate_headers()
-    table.append(headers)
-    for dct in (lst_dct):
-        row = list(dct.values())
-        table.append(row)
-    return table
+def get_mortgage_data(price, num_of_months, interest_rate,
+                      housing_inflation, rent_month,
+                      initial_expenses, rent_increase, is_first_estate):
+    mortgage_obj = Mortgage(price, num_of_months, interest_rate,
+                            housing_inflation, rent_month,
+                            initial_expenses, rent_increase, is_first_estate)
+    mortgage_rent_be_value = -1
+    mortgage_sell_be_value = -1
+    mortgage_table = None
+    if mortgage_obj.verify_input():
+        mortgage_list = mortgage_obj.calculate_mortgage()
+        mortgage_headers = mortgage_obj.generate_headers()
+        mortgage_rent_be_value = mortgage_obj.get_rent_idx(mortgage_list)
+        mortgage_sell_be_value = mortgage_obj.get_sell_idx(mortgage_list)
+        mortgage_table = mortgage_obj.generate_table(mortgage_list, mortgage_headers)
+    return mortgage_table, mortgage_rent_be_value, mortgage_sell_be_value
 
 @app.route('/')
 def index():
@@ -34,20 +41,26 @@ def calculate():
     except ValueError:
         return jsonify({'error': 'Invalid input. Please enter valid numbers.'}), 400
 
-    result_lst = calculate_mortgage_table(price, num_of_months, interest_rate,
-                                          housing_inflation, rent_month,
-                                          initial_expenses, rent_increase)
+    table, rent_be_value, sell_be_value = get_mortgage_data(price,
+                                                            num_of_months,
+                                                            interest_rate,
+                                                            housing_inflation,
+                                                            rent_month,
+                                                            initial_expenses,
+                                                            rent_increase,
+                                                            is_first_estate)
 
-    rent_be_value = get_rent_idx(result_lst)
-    sell_be_value = get_sell_idx(result_lst)
-
-    table = generate_table(result_lst)
-
-    response_data = {
-        'table': table,
-        'rent_be_value': rent_be_value,
-        'sell_be_value': sell_be_value
-    }
+    if table:
+        response_data = {
+            'table': table,
+            'rent_be_value': rent_be_value,
+            'sell_be_value': sell_be_value
+        }
+    else:
+        response_data = {
+            'rent_be_value': rent_be_value,
+            'sell_be_value': sell_be_value
+        }
 
     return jsonify(response_data)
 
