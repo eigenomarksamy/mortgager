@@ -41,7 +41,7 @@ function submitForm() {
 
 function clearTable() {
     var resultDiv = document.getElementById("result");
-    resultDiv.innerHTML = ''; // Clear the table content
+    resultDiv.innerHTML = 'NA'; // Clear the table content
 }
 
 // Function to display the table
