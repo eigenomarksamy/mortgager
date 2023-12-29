@@ -51,4 +51,3 @@ $ docker compose up --build
   - Long-term
   - Short-term
 - Add huispedia API integration
-

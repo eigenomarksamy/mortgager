@@ -7,6 +7,7 @@ function submitForm() {
     var rent_month = document.getElementById("rent_month").value;
     var initial_expenses = document.getElementById("initial_expenses").value;
     var rent_increase = document.getElementById("rent_increase").value;
+    var is_first_estate = document.getElementById("is_first_estate").checked;
 
     // Make an AJAX request to the server
     fetch('/calculate', {
@@ -14,22 +15,33 @@ function submitForm() {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'price=' + encodeURIComponent(price) + '&num_of_months=' + encodeURIComponent(num_of_months)
+        body: 'price=' + encodeURIComponent(price)
+            + '&num_of_months=' + encodeURIComponent(num_of_months)
             + '&interest_rate=' + encodeURIComponent(interest_rate)
             + '&housing_inflation=' + encodeURIComponent(housing_inflation)
             + '&rent_month=' + encodeURIComponent(rent_month)
             + '&initial_expenses=' + encodeURIComponent(initial_expenses)
-            + '&rent_increase=' + encodeURIComponent(rent_increase),
+            + '&rent_increase=' + encodeURIComponent(rent_increase)
+            + '&is_first_estate=' + encodeURIComponent(is_first_estate),
     })
     .then(response => response.json())
     .then(data => {
         if (data.error) {
             alert(data.error);
         } else {
-            displayTable(data.table);
+            if ('table' in data) {
+                displayTable(data.table);
+            } else {
+                clearTable();
+            }
             displayBreakevenData(data.rent_be_value, data.sell_be_value);
         }
     });
+}
+
+function clearTable() {
+    var resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = 'NA'; // Clear the table content
 }
 
 // Function to display the table
@@ -68,6 +80,12 @@ function displayTable(tableData) {
 }
 
 function displayBreakevenData(beValue1, beValue2) {
-    document.getElementById('textAValue').textContent = beValue1;
-    document.getElementById('textBValue').textContent = beValue2;
+    document.getElementById('textAValue').textContent = 'NA';
+    document.getElementById('textBValue').textContent = 'NA';
+    if (beValue1 >= 0) {
+        document.getElementById('textAValue').textContent = beValue1;
+    }
+    if (beValue2 >= 0) {
+        document.getElementById('textBValue').textContent = beValue2;
+    }
 }
