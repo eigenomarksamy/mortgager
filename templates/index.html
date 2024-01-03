@@ -15,7 +15,6 @@
                 <input type="number" id="price" value="425000.0">
             </div>
 
-            <!-- Add a checkbox for first property -->
             <div class="input-group">
                 <label for="is_first_estate">First Estate</label>
                 <input type="checkbox" id="is_first_estate">
@@ -51,9 +50,18 @@
                 <input type="number" id="rent_increase" value="8.0">
             </div>
 
+            <div class="input-group">
+                <label for="rent_return_month">Rent return per month:</label>
+                <input type="number" id="rent_return_month" value="1800.0">
+            </div>
+
+            <div class="input-group">
+                <label for="is_long_term_rent">Long-term rental</label>
+                <input type="checkbox" id="is_long_term_rent">
+            </div>
+
             <button onclick="submitForm()">Calculate</button>
             <div id="dynamic-elements">
-                <!-- Fixed text elements -->
                 <p>Rent breakeven month: <span id="textAValue"></span></p>
                 <p>Sell breakeven month: <span id="textBValue"></span></p>
             </div>

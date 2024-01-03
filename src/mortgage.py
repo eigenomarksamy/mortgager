@@ -7,7 +7,8 @@ class Mortgage:
     def __init__(self, price: float, num_of_months: int,
                  interest_rate: float, housing_inflation: float,
                  rent_month: float, initial_expenses: float,
-                 rent_increase: float, is_first_estate: bool) -> None:
+                 rent_increase: float, is_first_estate: bool,
+                 rent_return_month: float, is_long_term_rent: bool) -> None:
         self._price = price
         self._num_of_months = num_of_months
         self._interest_rate = interest_rate
@@ -16,6 +17,8 @@ class Mortgage:
         self._initial_expenses = initial_expenses
         self._rent_increase = rent_increase
         self._is_first_estate = is_first_estate
+        self._rent_return_month = rent_return_month
+        self._is_long_term_rent = is_long_term_rent
 
     def verify_input(self) -> bool:
         return self.verify_property_price()
