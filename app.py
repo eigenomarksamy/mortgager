@@ -9,12 +9,12 @@ def get_mortgage_data(price, num_of_months, interest_rate,
                       housing_inflation, rent_month,
                       initial_expenses, rent_increase,
                       is_first_estate, rent_return_month,
-                      is_long_term_rent):
+                      rental_term):
     mortgage_obj = Mortgage(price, num_of_months, interest_rate,
                             housing_inflation, rent_month,
                             initial_expenses, rent_increase,
                             is_first_estate, rent_return_month,
-                            is_long_term_rent)
+                            rental_term)
     mortgage_rent_be_value = -1
     mortgage_sell_be_value = -1
     mortgage_table = None
@@ -42,7 +42,7 @@ def calculate():
         rent_increase = float(request.form['rent_increase'])
         is_first_estate = convert_str_bool(request.form['is_first_estate'])
         rent_return_month = float(request.form['rent_return_month'])
-        is_long_term_rent = convert_str_bool(request.form['is_long_term_rent'])
+        rental_term = str(request.form['rental_term'])
 
     except ValueError:
         return jsonify({'error': 'Invalid input. Please enter valid numbers.'}), 400
@@ -56,7 +56,7 @@ def calculate():
                                                             rent_increase,
                                                             is_first_estate,
                                                             rent_return_month,
-                                                            is_long_term_rent)
+                                                            rental_term)
 
     if table:
         response_data = {

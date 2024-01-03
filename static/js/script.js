@@ -9,7 +9,7 @@ function submitForm() {
     var rent_increase = document.getElementById("rent_increase").value;
     var is_first_estate = document.getElementById("is_first_estate").checked;
     var rent_return_month = document.getElementById("rent_return_month").value;
-    var is_long_term_rent = document.getElementById("is_long_term_rent").checked;
+    var rental_term = document.getElementById("rental_term").value;
 
     // Make an AJAX request to the server
     fetch('/calculate', {
@@ -26,7 +26,7 @@ function submitForm() {
             + '&rent_increase=' + encodeURIComponent(rent_increase)
             + '&is_first_estate=' + encodeURIComponent(is_first_estate)
             + '&rent_return_month=' + encodeURIComponent(rent_return_month)
-            + '&is_long_term_rent=' + encodeURIComponent(is_long_term_rent),
+            + '&rental_term=' + encodeURIComponent(rental_term),
     })
     .then(response => response.json())
     .then(data => {

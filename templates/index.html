@@ -55,10 +55,14 @@
                 <input type="number" id="rent_return_month" value="1800.0">
             </div>
 
-            <div class="input-group">
-                <label for="is_long_term_rent">Long-term rental</label>
-                <input type="checkbox" id="is_long_term_rent">
-            </div>
+            <label for="rental_term">Rental option:</label>
+            <select id="rental_term">
+                <option value="no_term">No-term</option>
+                <option value="long_term">Long-term</option>
+                <option value="short_term">Short-term</option>
+                <option value="mixed_term">Mixed</option>
+            </select>
+            <br>
 
             <button onclick="submitForm()">Calculate</button>
             <div id="dynamic-elements">

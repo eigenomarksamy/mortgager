@@ -8,7 +8,7 @@ class Mortgage:
                  interest_rate: float, housing_inflation: float,
                  rent_month: float, initial_expenses: float,
                  rent_increase: float, is_first_estate: bool,
-                 rent_return_month: float, is_long_term_rent: bool) -> None:
+                 rent_return_month: float, rental_term: str) -> None:
         self._price = price
         self._num_of_months = num_of_months
         self._interest_rate = interest_rate
@@ -18,9 +18,12 @@ class Mortgage:
         self._rent_increase = rent_increase
         self._is_first_estate = is_first_estate
         self._rent_return_month = rent_return_month
-        self._is_long_term_rent = is_long_term_rent
+        self._rental_term = MortgageConf.convert_rental_term(rental_term)
 
     def verify_input(self) -> bool:
+        self._is_renting_out_allowed = not self._is_first_estate
+        if not self._is_renting_out_allowed:
+            self._rental_term = MortgageConf.convert_rental_term("no_term")
         return self.verify_property_price()
 
     def verify_property_price(self) -> bool:
