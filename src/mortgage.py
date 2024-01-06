@@ -1,7 +1,7 @@
 import math
 
 from src.conf import MortgageConf
-from src.utils import convert_percent, calculate_pmt
+from src.utils import convert_percent, calculate_pmt, get_idx_of_sign_change
 
 class Mortgage:
     def __init__(self, price: float, num_of_months: int,
@@ -21,8 +21,7 @@ class Mortgage:
         self._rental_term = MortgageConf.convert_rental_term(rental_term)
 
     def verify_input(self) -> bool:
-        self._is_renting_out_allowed = not self._is_first_estate
-        if not self._is_renting_out_allowed:
+        if self._is_first_estate:
             self._rental_term = MortgageConf.convert_rental_term("no_term")
         return self.verify_property_price()
 
@@ -34,13 +33,13 @@ class Mortgage:
             transfer_tax = self._price * 0.02
             self._price += transfer_tax
         return True
-    
+
     def generate_headers(self) -> list:
         return ["Month", "Total debt", "Payable interest", "Repayment due",
                 "Residual debt", "Total paid rent", "Total paid interest",
                 "Rent net profit", "Estate value", "Selling profit"]
 
-    def generate_table(self, lst_dct, headers):
+    def generate_table(self, lst_dct: list, headers: list) -> list:
         table = []
         table.append(headers)
         for dct in (lst_dct):
@@ -115,10 +114,8 @@ def compute_current_rent(rent_to_compare: float, rent_annual_increase: float, mo
 def compute_estate_market_value(estate_worth: float, market_increase: float) -> float:
     return estate_worth * (1 + convert_percent(market_increase) / 12)
 
-def get_idx_of_sign_change(list_to_search: list, key: str) -> int:
-    for i in range(1, len(list_to_search)):
-        if list_to_search[i][key] < 0 and list_to_search[i - 1][key] >= 0:
-            return i + 1
-        elif list_to_search[i][key] > 0 and list_to_search[i - 1][key] <= 0:
-            return i + 1
-    return -1
+def compute_current_renting_out(rent: float, renting_out_annual_increase: float, month: int, rent_term: MortgageConf.RentTerm) -> float:
+    return 0
+
+def compute_renting_out_cost(rent_term: MortgageConf.RentTerm, month: int) -> float:
+    return 0

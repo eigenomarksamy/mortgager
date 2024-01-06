@@ -10,6 +10,20 @@ class MortgageConf:
 
     FIRST_PROPERTY_MAX_VALUE = 440000
 
+    LONG_TERM_RENTED_MONTHS = 3 * 12
+
+    SHORT_TERM_RENTED_MONTHS = 1
+
+    MIXED_TERM_RENTED_MONTHS = 1.5 * 12
+
+    LONG_TERM_RENT_MONTHS_VACANT_PER_YEAR = 1
+
+    SHORT_TERM_RENT_MONTHS_VACANT_PER_YEAR = 6
+
+    MIXED_TERM_RENT_MONTHS_VACANT_PER_YEAR = 3
+
+    RENOVATION_COSTS_MONTHLY_RENTS = 3
+
     RENTAL_TERM_MAP = {"no_term": RentTerm.NO_TERM,
                        "long_term": RentTerm.LONG_TERM,
                        "short_term": RentTerm.SHORT_TERM,
