@@ -38,7 +38,7 @@ function submitForm() {
             } else {
                 clearTable();
             }
-            displayBreakevenData(data.rent_be_value, data.sell_be_value);
+            displayBreakevenData(data.rent_be_value, data.sell_be_value, data.rent_out_be_value);
         }
     });
 }
@@ -83,13 +83,17 @@ function displayTable(tableData) {
     resultDiv.innerHTML = tableHTML;
 }
 
-function displayBreakevenData(beValue1, beValue2) {
+function displayBreakevenData(beValue1, beValue2, beValue3) {
     document.getElementById('textAValue').textContent = 'NA';
     document.getElementById('textBValue').textContent = 'NA';
+    document.getElementById('textCValue').textContent = 'NA';
     if (beValue1 >= 0) {
         document.getElementById('textAValue').textContent = beValue1;
     }
     if (beValue2 >= 0) {
         document.getElementById('textBValue').textContent = beValue2;
+    }
+    if (beValue3 >= 0) {
+        document.getElementById('textCValue').textContent = beValue3;
     }
 }

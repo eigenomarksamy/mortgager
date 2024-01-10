@@ -10,7 +10,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    width: 90%; /* Adjust as needed */
+    width: 98%; /* Adjust as needed */
 }
 
 .mortgager {
@@ -18,7 +18,7 @@ body {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 80%; /* Adjust as needed */
+    width: 96%; /* Adjust as needed */
 }
 
 #dynamic-elements {
@@ -75,6 +75,6 @@ th {
     background-color: #ffffff; /* Odd row color */
 }
 
-#textAValue, #textBValue {
+#textAValue, #textBValue, #textCValue {
     margin-left: 5px;
 }
