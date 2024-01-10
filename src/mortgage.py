@@ -1,13 +1,16 @@
 import math
 
+from typing import Union, Type
+
 from src.conf import MortgageConf
-from src.utils import convert_percent, calculate_pmt
+from src.utils import convert_percent, calculate_pmt, get_idx_of_sign_change
 
 class Mortgage:
     def __init__(self, price: float, num_of_months: int,
                  interest_rate: float, housing_inflation: float,
                  rent_month: float, initial_expenses: float,
-                 rent_increase: float, is_first_estate: bool) -> None:
+                 rent_increase: float, is_first_estate: bool,
+                 rent_return_month: float, rental_term: str) -> None:
         self._price = price
         self._num_of_months = num_of_months
         self._interest_rate = interest_rate
@@ -16,8 +19,12 @@ class Mortgage:
         self._initial_expenses = initial_expenses
         self._rent_increase = rent_increase
         self._is_first_estate = is_first_estate
+        self._rent_return_month = rent_return_month
+        self._rental_term = MortgageConf.convert_rental_term(rental_term)
 
     def verify_input(self) -> bool:
+        if self._is_first_estate:
+            self._rental_term = MortgageConf.convert_rental_term("no_term")
         return self.verify_property_price()
 
     def verify_property_price(self) -> bool:
@@ -28,13 +35,15 @@ class Mortgage:
             transfer_tax = self._price * 0.02
             self._price += transfer_tax
         return True
-    
+
     def generate_headers(self) -> list:
         return ["Month", "Total debt", "Payable interest", "Repayment due",
                 "Residual debt", "Total paid rent", "Total paid interest",
-                "Rent net profit", "Estate value", "Selling profit"]
+                "Rent net profit", "Estate value", "Selling profit",
+                "Gross return rent", "Accumulated gross rent return",
+                "Cost rent", "Accumulated cost rent", "Rent out net gain"]
 
-    def generate_table(self, lst_dct, headers):
+    def generate_table(self, lst_dct: list, headers: list) -> list:
         table = []
         table.append(headers)
         for dct in (lst_dct):
@@ -47,6 +56,9 @@ class Mortgage:
 
     def get_sell_idx(self, mortgage_table: list) -> int:
         return get_idx_of_sign_change(mortgage_table, 'selling_profit')
+
+    def get_rent_out_idx(self, mortgage_table: list) -> int:
+        return get_idx_of_sign_change(mortgage_table, 'rent_out_net_gain')
 
     def calculate_mortgage(self) -> list:
         lst = []
@@ -62,12 +74,21 @@ class Mortgage:
         dct_init['rent_net_profit'] = compute_total_gain_for_rent(dct_init['total_paid_interest'], self._initial_expenses, dct_init['total_paid_rent'])
         dct_init['estate_value'] = self._price
         dct_init['selling_profit'] = compute_selling_gain(dct_init['estate_value'], dct_init['total_debt'], self._initial_expenses)
+        dct_init['rent_out_gross'] = compute_current_renting_out(self._rent_month, convert_percent(self._rent_increase), dct_init['period'], self._rental_term)
+        dct_init['total_return_from_renting_out'] = dct_init['rent_out_gross']
+        dct_init['rent_out_cost'] = compute_renting_out_cost(self._rental_term, dct_init['period'], dct_init['rent_out_gross'])
+        dct_init['total_cost_from_renting_out'] = dct_init['rent_out_cost']
+        dct_init['rent_out_net_gain'] = dct_init['total_return_from_renting_out'] - dct_init['total_cost_from_renting_out'] - dct_init['total_debt']
         lst.append(dct_init)
         total_debt = dct_init['total_debt']
         repayment_due = dct_init['repayment_due']
         total_paid_rent = dct_init['total_paid_rent']
         total_paid_interest = dct_init['total_paid_interest']
         estate_value = dct_init['estate_value']
+        rent_out_gross = dct_init['rent_out_gross']
+        rent_out_cost = dct_init['rent_out_cost']
+        total_cost_from_renting_out = rent_out_cost
+        total_return_from_renting_out = rent_out_gross
         for period in range(2, self._num_of_months + 1):
             dct = {}
             dct['period'] = period
@@ -80,11 +101,20 @@ class Mortgage:
             dct['rent_net_profit'] = compute_total_gain_for_rent(dct['total_paid_interest'], self._initial_expenses, dct['total_paid_rent'])
             dct['estate_value'] = compute_estate_market_value(estate_value, convert_percent(self._housing_inflation))
             dct['selling_profit'] = compute_selling_gain(dct['estate_value'], dct['total_debt'], self._initial_expenses)
+            dct['rent_out_gross'] = compute_current_renting_out(rent_out_gross, convert_percent(self._rent_increase), dct['period'], self._rental_term)
+            dct['total_return_from_renting_out'] = total_return_from_renting_out
+            dct['rent_out_cost'] = compute_renting_out_cost(self._rental_term, dct['period'], dct['rent_out_gross'])
+            dct['total_cost_from_renting_out'] = total_cost_from_renting_out
+            dct['rent_out_net_gain'] = dct['total_return_from_renting_out'] - dct['total_cost_from_renting_out'] - dct['total_debt']
             total_debt = dct['total_debt']
             repayment_due = dct['repayment_due']
             total_paid_rent = dct['total_paid_rent']
             total_paid_interest = dct['total_paid_interest']
             estate_value = dct['estate_value']
+            rent_out_gross = dct['rent_out_gross']
+            rent_out_cost = dct['rent_out_cost']
+            total_return_from_renting_out += rent_out_gross
+            total_cost_from_renting_out += rent_out_cost
             lst.append(dct)
         return lst
 
@@ -109,10 +139,36 @@ def compute_current_rent(rent_to_compare: float, rent_annual_increase: float, mo
 def compute_estate_market_value(estate_worth: float, market_increase: float) -> float:
     return estate_worth * (1 + convert_percent(market_increase) / 12)
 
-def get_idx_of_sign_change(list_to_search: list, key: str) -> int:
-    for i in range(1, len(list_to_search)):
-        if list_to_search[i][key] < 0 and list_to_search[i - 1][key] >= 0:
-            return i + 1
-        elif list_to_search[i][key] > 0 and list_to_search[i - 1][key] <= 0:
-            return i + 1
-    return -1
+def compute_current_renting_out(rent: float, renting_out_annual_increase: float, month: int, rent_term: Union[int, Type["MortgageConf.RentTerm"]]) -> float:
+    months_to_skip = 0
+    if rent_term == MortgageConf.RentTerm.LONG_TERM:
+        months_to_skip = MortgageConf.LONG_TERM_MONTHS_TO_SKIP
+    elif rent_term == MortgageConf.RentTerm.SHORT_TERM:
+        months_to_skip = MortgageConf.SHORT_TERM_MONTHS_TO_SKIP
+    elif rent_term == MortgageConf.RentTerm.MIXED_TERM:
+        months_to_skip = MortgageConf.MIXED_TERM_MONTHS_TO_SKIP
+    else:
+        return 0
+    if month % months_to_skip == 0:
+        return rent
+    elif month % 12 == 0:
+        adjusted_rate_of_increase = 1 + renting_out_annual_increase
+        next_month_rent = rent * adjusted_rate_of_increase
+        return next_month_rent
+    else:
+        return rent
+
+def compute_renting_out_cost(rent_term: Union[int, Type["MortgageConf.RentTerm"]], month: int, rent: float) -> float:
+    next_renovation = 0
+    if rent_term == MortgageConf.RentTerm.LONG_TERM:
+        next_renovation = MortgageConf.LONG_TERM_MONTHS_TO_SKIP
+    elif rent_term == MortgageConf.RentTerm.SHORT_TERM:
+        next_renovation = MortgageConf.SHORT_TERM_MONTHS_TO_SKIP
+    elif rent_term == MortgageConf.RentTerm.MIXED_TERM:
+        next_renovation = MortgageConf.MIXED_TERM_MONTHS_TO_SKIP
+    else:
+        return 0
+    if month % next_renovation == 0:
+        return rent * MortgageConf.RENOVATION_COSTS_MONTHLY_RENTS
+    else:
+        return 0

@@ -44,7 +44,6 @@ $ docker compose up --build
     - [resource2](https://www.iamexpat.nl/housing/buy-house-netherlands/taxes-costs-fees)
     - [resource3](https://www.iamexpat.nl/housing/dutch-mortgages/fees-costs-tax-relief-netherlands)
 - Add first home checkbox
-  - Maximum allowed price
   - Rent allowance
   - Tax return
 - Add return of rent

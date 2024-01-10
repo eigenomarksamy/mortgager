@@ -8,6 +8,8 @@ function submitForm() {
     var initial_expenses = document.getElementById("initial_expenses").value;
     var rent_increase = document.getElementById("rent_increase").value;
     var is_first_estate = document.getElementById("is_first_estate").checked;
+    var rent_return_month = document.getElementById("rent_return_month").value;
+    var rental_term = document.getElementById("rental_term").value;
 
     // Make an AJAX request to the server
     fetch('/calculate', {
@@ -22,7 +24,9 @@ function submitForm() {
             + '&rent_month=' + encodeURIComponent(rent_month)
             + '&initial_expenses=' + encodeURIComponent(initial_expenses)
             + '&rent_increase=' + encodeURIComponent(rent_increase)
-            + '&is_first_estate=' + encodeURIComponent(is_first_estate),
+            + '&is_first_estate=' + encodeURIComponent(is_first_estate)
+            + '&rent_return_month=' + encodeURIComponent(rent_return_month)
+            + '&rental_term=' + encodeURIComponent(rental_term),
     })
     .then(response => response.json())
     .then(data => {
@@ -34,7 +38,7 @@ function submitForm() {
             } else {
                 clearTable();
             }
-            displayBreakevenData(data.rent_be_value, data.sell_be_value);
+            displayBreakevenData(data.rent_be_value, data.sell_be_value, data.rent_out_be_value);
         }
     });
 }
@@ -79,13 +83,17 @@ function displayTable(tableData) {
     resultDiv.innerHTML = tableHTML;
 }
 
-function displayBreakevenData(beValue1, beValue2) {
+function displayBreakevenData(beValue1, beValue2, beValue3) {
     document.getElementById('textAValue').textContent = 'NA';
     document.getElementById('textBValue').textContent = 'NA';
+    document.getElementById('textCValue').textContent = 'NA';
     if (beValue1 >= 0) {
         document.getElementById('textAValue').textContent = beValue1;
     }
     if (beValue2 >= 0) {
         document.getElementById('textBValue').textContent = beValue2;
+    }
+    if (beValue3 >= 0) {
+        document.getElementById('textCValue').textContent = beValue3;
     }
 }
