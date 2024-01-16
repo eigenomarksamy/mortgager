@@ -32,8 +32,7 @@ class Mortgage:
             if self._price > MortgageConf.FIRST_PROPERTY_MAX_VALUE:
                 return False
         else:
-            transfer_tax = self._price * 0.02
-            self._price += transfer_tax
+            self._price *= (1 + convert_percent(MortgageConf.PROPERTY_TRANSFER_TAX_PERCENT))
         return True
 
     def generate_headers(self) -> list:
@@ -74,11 +73,11 @@ class Mortgage:
         dct_init['rent_net_profit'] = compute_total_gain_for_rent(dct_init['total_paid_interest'], self._initial_expenses, dct_init['total_paid_rent'])
         dct_init['estate_value'] = self._price
         dct_init['selling_profit'] = compute_selling_gain(dct_init['estate_value'], dct_init['total_debt'], self._initial_expenses)
-        dct_init['rent_out_gross'] = compute_current_renting_out(self._rent_month, convert_percent(self._rent_increase), dct_init['period'], self._rental_term)
+        dct_init['rent_out_gross'] = compute_current_renting_out(self._rent_return_month, convert_percent(self._rent_increase), dct_init['period'], self._rental_term)
         dct_init['total_return_from_renting_out'] = dct_init['rent_out_gross']
         dct_init['rent_out_cost'] = compute_renting_out_cost(self._rental_term, dct_init['period'], dct_init['rent_out_gross'])
         dct_init['total_cost_from_renting_out'] = dct_init['rent_out_cost']
-        dct_init['rent_out_net_gain'] = dct_init['total_return_from_renting_out'] - dct_init['total_cost_from_renting_out'] - dct_init['total_debt']
+        dct_init['rent_out_net_gain'] = compute_renting_out_net_gain(self._rental_term, dct_init['total_return_from_renting_out'], dct_init['total_cost_from_renting_out'], dct_init['total_debt'])
         lst.append(dct_init)
         total_debt = dct_init['total_debt']
         repayment_due = dct_init['repayment_due']
@@ -105,7 +104,7 @@ class Mortgage:
             dct['total_return_from_renting_out'] = total_return_from_renting_out
             dct['rent_out_cost'] = compute_renting_out_cost(self._rental_term, dct['period'], dct['rent_out_gross'])
             dct['total_cost_from_renting_out'] = total_cost_from_renting_out
-            dct['rent_out_net_gain'] = dct['total_return_from_renting_out'] - dct['total_cost_from_renting_out'] - dct['total_debt']
+            dct['rent_out_net_gain'] = compute_renting_out_net_gain(self._rental_term, dct['total_return_from_renting_out'], dct['total_cost_from_renting_out'], dct['total_debt'])
             total_debt = dct['total_debt']
             repayment_due = dct['repayment_due']
             total_paid_rent = dct['total_paid_rent']
@@ -172,3 +171,9 @@ def compute_renting_out_cost(rent_term: Union[int, Type["MortgageConf.RentTerm"]
         return rent * MortgageConf.RENOVATION_COSTS_MONTHLY_RENTS
     else:
         return 0
+
+def compute_renting_out_net_gain(rent_term: Union[int, Type["MortgageConf.RentTerm"]], total_return_rent: float, total_cost_rent: float, total_debt: float) -> float:
+    if rent_term == MortgageConf.RentTerm.NO_TERM:
+        return 0
+    else:
+        return total_return_rent - total_cost_rent - total_debt
