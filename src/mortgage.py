@@ -8,7 +8,8 @@ from src.utils import convert_percent, calculate_pmt, get_idx_of_sign_change
 class Mortgage:
     def __init__(self, price: float, num_of_months: int,
                  interest_rate: float, housing_inflation: float,
-                 rent_month: float, initial_expenses: float,
+                 rent_month: float, overbidding: float,
+                 property_fixup: float, realtor_fee: float,
                  rent_increase: float, is_first_estate: bool,
                  rent_return_month: float, rental_term: str) -> None:
         self._price = price
@@ -16,7 +17,7 @@ class Mortgage:
         self._interest_rate = interest_rate
         self._housing_inflation = housing_inflation
         self._rent_month = rent_month
-        self._initial_expenses = initial_expenses
+        self._initial_expenses = overbidding + property_fixup + self._price * convert_percent(realtor_fee)
         self._rent_increase = rent_increase
         self._is_first_estate = is_first_estate
         self._rent_return_month = rent_return_month
@@ -136,7 +137,7 @@ def compute_current_rent(rent_to_compare: float, rent_annual_increase: float, mo
     return rent_to_compare * pow(1 + convert_percent(rent_annual_increase), math.floor((month - 1) / 12))
 
 def compute_estate_market_value(estate_worth: float, market_increase: float) -> float:
-    return estate_worth * (1 + convert_percent(market_increase) / 12)
+    return estate_worth * (1 + market_increase / 12)
 
 def compute_current_renting_out(rent: float, renting_out_annual_increase: float, month: int, rent_term: Union[int, Type["MortgageConf.RentTerm"]]) -> float:
     months_to_skip = 0
