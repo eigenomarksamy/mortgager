@@ -6,15 +6,15 @@ from src.utils import convert_str_bool
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 def get_mortgage_data(price, num_of_months, interest_rate,
-                      housing_inflation, rent_month,
-                      initial_expenses, rent_increase,
+                      housing_inflation, rent_month, overbidding,
+                      property_fixup, realtor_fee, rent_increase,
                       is_first_estate, rent_return_month,
                       rental_term):
     mortgage_obj = Mortgage(price, num_of_months, interest_rate,
                             housing_inflation, rent_month,
-                            initial_expenses, rent_increase,
-                            is_first_estate, rent_return_month,
-                            rental_term)
+                            overbidding, property_fixup, realtor_fee,
+                            rent_increase, is_first_estate,
+                            rent_return_month, rental_term)
     mortgage_rent_be_value = -1
     mortgage_sell_be_value = -1
     mortgage_rent_out_be_value = -1
@@ -40,7 +40,9 @@ def calculate():
         interest_rate = float(request.form['interest_rate'])
         housing_inflation = float(request.form['housing_inflation'])
         rent_month = float(request.form['rent_month'])
-        initial_expenses = float(request.form['initial_expenses'])
+        overbidding = float(request.form['overbidding'])
+        property_fixup = float(request.form['property_fixup'])
+        realtor_fee = float(request.form['realtor_fee'])
         rent_increase = float(request.form['rent_increase'])
         is_first_estate = convert_str_bool(request.form['is_first_estate'])
         rent_return_month = float(request.form['rent_return_month'])
@@ -50,8 +52,9 @@ def calculate():
         return jsonify({'error': 'Invalid input. Please enter valid numbers.'}), 400
 
     table, rent_be_value, sell_be_value, rent_out_be_value = get_mortgage_data(price,
-            num_of_months, interest_rate, housing_inflation, rent_month, initial_expenses,
-            rent_increase, is_first_estate, rent_return_month, rental_term)
+            num_of_months, interest_rate, housing_inflation, rent_month, overbidding,
+            property_fixup, realtor_fee, rent_increase, is_first_estate,
+            rent_return_month, rental_term)
 
     if table:
         response_data = {
