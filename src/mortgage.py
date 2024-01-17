@@ -65,7 +65,7 @@ class Mortgage:
         dct_init = {}
         dct_init['period'] = 1
         dct_init['total_debt'] = self._price
-        dct_init['payable_interest'] = compute_interest_to_be_paid(dct_init['total_debt'], self._interest_rate)
+        dct_init['payable_interest'] = compute_interest_to_be_paid(dct_init['total_debt'], convert_percent(self._interest_rate))
         total_pmt = -calculate_pmt(self._price, convert_percent(self._interest_rate), self._num_of_months)
         dct_init['repayment_due'] = compute_repayment(total_pmt, dct_init['payable_interest'])
         dct_init['residual_debt'] = compute_residual_debt(dct_init['total_debt'], dct_init['repayment_due'])
@@ -93,7 +93,7 @@ class Mortgage:
             dct = {}
             dct['period'] = period
             dct['total_debt'] = total_debt - repayment_due
-            dct['payable_interest'] = compute_interest_to_be_paid(dct['total_debt'], self._interest_rate)
+            dct['payable_interest'] = compute_interest_to_be_paid(dct['total_debt'], convert_percent(self._interest_rate))
             dct['repayment_due'] = compute_repayment(total_pmt, dct['payable_interest'])
             dct['residual_debt'] = compute_residual_debt(dct['total_debt'], dct['repayment_due'])
             dct['total_paid_rent'] = total_paid_rent + compute_current_rent(self._rent_month, convert_percent(self._rent_increase), dct['period'])
@@ -119,7 +119,7 @@ class Mortgage:
         return lst
 
 def compute_interest_to_be_paid(total_debt: float, interest_rate: float) -> float:
-    return total_debt * (convert_percent(interest_rate) / 12)
+    return total_debt * (interest_rate / 12)
 
 def compute_repayment(pmt: float, payable_interest: float) -> float:
     return pmt - payable_interest
@@ -134,7 +134,7 @@ def compute_selling_gain(estate_worth: float, total_debt: float, initial_fees: f
     return estate_worth - total_debt - initial_fees
 
 def compute_current_rent(rent_to_compare: float, rent_annual_increase: float, month: int) -> float:
-    return rent_to_compare * pow(1 + convert_percent(rent_annual_increase), math.floor((month - 1) / 12))
+    return rent_to_compare * pow(1 + rent_annual_increase, math.floor((month - 1) / 12))
 
 def compute_estate_market_value(estate_worth: float, market_increase: float) -> float:
     return estate_worth * (1 + market_increase / 12)
