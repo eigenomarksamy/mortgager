@@ -37,11 +37,12 @@ class Mortgage:
         return True
 
     def generate_headers(self) -> list:
-        return ["Month", "Total debt", "Payable interest", "Repayment due",
-                "Residual debt", "Total paid rent", "Total paid interest",
-                "Rent net profit", "Estate value", "Selling profit",
-                "Gross return rent", "Accumulated gross rent return",
-                "Cost rent", "Accumulated cost rent", "Rent out net gain"]
+        return ["Month", "Total debt", "Monthly payment", "Payable interest",
+                "Repayment due", "Residual debt", "Total paid rent",
+                "Total paid interest", "Rent net profit", "Estate value",
+                "Selling profit", "Gross return rent",
+                "Accumulated gross rent return", "Cost rent",
+                "Accumulated cost rent", "Rent out net gain"]
 
     def generate_table(self, lst_dct: list, headers: list) -> list:
         table = []
@@ -65,6 +66,7 @@ class Mortgage:
         dct_init = {}
         dct_init['period'] = 1
         dct_init['total_debt'] = self._price
+        dct_init['monthly_payment'] = self._price / self._num_of_months
         dct_init['payable_interest'] = compute_interest_to_be_paid(dct_init['total_debt'], convert_percent(self._interest_rate))
         total_pmt = -calculate_pmt(self._price, convert_percent(self._interest_rate), self._num_of_months)
         dct_init['repayment_due'] = compute_repayment(total_pmt, dct_init['payable_interest'])
@@ -93,6 +95,7 @@ class Mortgage:
             dct = {}
             dct['period'] = period
             dct['total_debt'] = total_debt - repayment_due
+            dct['monthly_payment'] = self._price / self._num_of_months
             dct['payable_interest'] = compute_interest_to_be_paid(dct['total_debt'], convert_percent(self._interest_rate))
             dct['repayment_due'] = compute_repayment(total_pmt, dct['payable_interest'])
             dct['residual_debt'] = compute_residual_debt(dct['total_debt'], dct['repayment_due'])
