@@ -8,12 +8,12 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 def get_mortgage_data(price, num_of_months, interest_rate,
                       housing_inflation, rent_month, overbidding,
                       property_fixup, realtor_fee, rent_increase,
-                      is_first_estate, rent_return_month,
+                      is_first_estate, older_than_35, rent_return_month,
                       rental_term):
     mortgage_obj = Mortgage(price, num_of_months, interest_rate,
                             housing_inflation, rent_month,
                             overbidding, property_fixup, realtor_fee,
-                            rent_increase, is_first_estate,
+                            rent_increase, is_first_estate, older_than_35,
                             rent_return_month, rental_term)
     mortgage_rent_be_value = -1
     mortgage_sell_be_value = -1
@@ -45,6 +45,7 @@ def calculate():
         realtor_fee = float(request.form['realtor_fee'])
         rent_increase = float(request.form['rent_increase'])
         is_first_estate = convert_str_bool(request.form['is_first_estate'])
+        older_than_35 = convert_str_bool(request.form['older_than_35'])
         rent_return_month = float(request.form['rent_return_month'])
         rental_term = str(request.form['rental_term'])
 
@@ -53,7 +54,7 @@ def calculate():
 
     table, rent_be_value, sell_be_value, rent_out_be_value = get_mortgage_data(price,
             num_of_months, interest_rate, housing_inflation, rent_month, overbidding,
-            property_fixup, realtor_fee, rent_increase, is_first_estate,
+            property_fixup, realtor_fee, rent_increase, is_first_estate, older_than_35,
             rent_return_month, rental_term)
 
     if table:

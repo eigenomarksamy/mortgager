@@ -11,7 +11,8 @@ class Mortgage:
                  rent_month: float, overbidding: float,
                  property_fixup: float, realtor_fee: float,
                  rent_increase: float, is_first_estate: bool,
-                 rent_return_month: float, rental_term: str) -> None:
+                 older_than_35: bool, rent_return_month: float,
+                 rental_term: str) -> None:
         self._price = price
         self._num_of_months = num_of_months
         self._interest_rate = interest_rate
@@ -20,6 +21,7 @@ class Mortgage:
         self._initial_expenses = overbidding + property_fixup + self._price * convert_percent(realtor_fee)
         self._rent_increase = rent_increase
         self._is_first_estate = is_first_estate
+        self._older_than_35 = older_than_35
         self._rent_return_month = rent_return_month
         self._rental_term = MortgageConf.convert_rental_term(rental_term)
 
@@ -32,7 +34,7 @@ class Mortgage:
         if self._is_first_estate:
             if self._price > MortgageConf.FIRST_PROPERTY_MAX_VALUE:
                 return False
-        else:
+        if self._older_than_35 or not self._is_first_estate:
             self._price *= (1 + convert_percent(MortgageConf.PROPERTY_TRANSFER_TAX_PERCENT))
         return True
 
