@@ -43,4 +43,5 @@ $ docker compose up --build
     - [resource1](https://www.hanno.nl/expat-mortgages/tax-return-and-homeownership-in-the-netherlands/)
     - [resource2](https://www.iamexpat.nl/housing/buy-house-netherlands/taxes-costs-fees)
     - [resource3](https://www.iamexpat.nl/housing/dutch-mortgages/fees-costs-tax-relief-netherlands)
+- Add monthly charges (e.g., [for an actual property](https://huispedia.nl/eindhoven/5615pa/hoogstraat/39-03#finance))
 - Add huispedia API integration
