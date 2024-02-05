@@ -10,6 +10,7 @@ function submitForm() {
     var realtor_fee = document.getElementById("realtor_fee").value;
     var rent_increase = document.getElementById("rent_increase").value;
     var is_first_estate = document.getElementById("is_first_estate").checked;
+    var older_than_35 = document.getElementById("older_than_35").checked;
     var rent_return_month = document.getElementById("rent_return_month").value;
     var rental_term = document.getElementById("rental_term").value;
 
@@ -29,6 +30,7 @@ function submitForm() {
             + '&realtor_fee=' + encodeURIComponent(realtor_fee)
             + '&rent_increase=' + encodeURIComponent(rent_increase)
             + '&is_first_estate=' + encodeURIComponent(is_first_estate)
+            + '&older_than_35=' + encodeURIComponent(older_than_35)
             + '&rent_return_month=' + encodeURIComponent(rent_return_month)
             + '&rental_term=' + encodeURIComponent(rental_term),
     })
