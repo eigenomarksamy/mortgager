@@ -1,40 +1,28 @@
 
-function submitForm() {
-    var price = document.getElementById("price").value;
-    var num_of_months = document.getElementById("num_of_months").value;
-    var interest_rate = document.getElementById("interest_rate").value;
-    var housing_inflation = document.getElementById("housing_inflation").value;
-    var rent_month = document.getElementById("rent_month").value;
-    var overbidding = document.getElementById("overbidding").value;
-    var property_fixup = document.getElementById("property_fixup").value;
-    var realtor_fee = document.getElementById("realtor_fee").value;
-    var rent_increase = document.getElementById("rent_increase").value;
-    var is_first_estate = document.getElementById("is_first_estate").checked;
-    var older_than_35 = document.getElementById("older_than_35").checked;
-    var rent_return_month = document.getElementById("rent_return_month").value;
-    var rental_term = document.getElementById("rental_term").value;
+// Where calculations run. By default the form posts to Flask's /calculate
+// (app.py). The static build (build_static.py) sets window.MORTGAGER so the
+// same Python in src/ runs in the browser with Pyodide, without a server.
+var CONFIG = window.MORTGAGER || { backend: 'server' };
 
-    // Make an AJAX request to the server
-    fetch('/calculate', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'price=' + encodeURIComponent(price)
-            + '&num_of_months=' + encodeURIComponent(num_of_months)
-            + '&interest_rate=' + encodeURIComponent(interest_rate)
-            + '&housing_inflation=' + encodeURIComponent(housing_inflation)
-            + '&rent_month=' + encodeURIComponent(rent_month)
-            + '&overbidding=' + encodeURIComponent(overbidding)
-            + '&property_fixup=' + encodeURIComponent(property_fixup)
-            + '&realtor_fee=' + encodeURIComponent(realtor_fee)
-            + '&rent_increase=' + encodeURIComponent(rent_increase)
-            + '&is_first_estate=' + encodeURIComponent(is_first_estate)
-            + '&older_than_35=' + encodeURIComponent(older_than_35)
-            + '&rent_return_month=' + encodeURIComponent(rent_return_month)
-            + '&rental_term=' + encodeURIComponent(rental_term),
-    })
-    .then(response => response.json())
+function submitForm() {
+    // Every value is sent as a string, the way an HTML form would send it.
+    var form = {
+        price: document.getElementById("price").value,
+        num_of_months: document.getElementById("num_of_months").value,
+        interest_rate: document.getElementById("interest_rate").value,
+        housing_inflation: document.getElementById("housing_inflation").value,
+        rent_month: document.getElementById("rent_month").value,
+        overbidding: document.getElementById("overbidding").value,
+        property_fixup: document.getElementById("property_fixup").value,
+        realtor_fee: document.getElementById("realtor_fee").value,
+        rent_increase: document.getElementById("rent_increase").value,
+        is_first_estate: String(document.getElementById("is_first_estate").checked),
+        older_than_35: String(document.getElementById("older_than_35").checked),
+        rent_return_month: document.getElementById("rent_return_month").value,
+        rental_term: document.getElementById("rental_term").value,
+    };
+
+    requestCalculation(form)
     .then(data => {
         if (data.error) {
             alert(data.error);
@@ -46,7 +34,66 @@ function submitForm() {
             }
             displayBreakevenData(data.rent_be_value, data.sell_be_value, data.rent_out_be_value);
         }
+    })
+    .catch(error => {
+        console.error(error);
+        alert('Calculation failed: ' + error.message);
     });
+}
+
+function requestCalculation(form) {
+    if (CONFIG.backend === 'browser') {
+        return calculateInBrowser(form);
+    }
+    return fetch('/calculate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(form),
+    })
+    .then(response => response.json());
+}
+
+var pythonApi = null;
+var pythonReady = false;
+
+// Loads Pyodide and the project's Python sources once; later calls reuse them.
+function loadPython() {
+    if (!pythonApi) {
+        pythonApi = (async () => {
+            const pyodide = await loadPyodide();
+            pyodide.FS.mkdirTree('/home/pyodide/src');
+            for (const name of CONFIG.pythonFiles) {
+                const response = await fetch('src/' + name);
+                if (!response.ok) {
+                    throw new Error('Could not load src/' + name);
+                }
+                pyodide.FS.writeFile('/home/pyodide/src/' + name, await response.text());
+            }
+            const api = pyodide.pyimport('src.api');
+            pythonReady = true;
+            return api;
+        })().catch(error => {
+            pythonApi = null; // allow a retry on the next click
+            throw error;
+        });
+    }
+    return pythonApi;
+}
+
+async function calculateInBrowser(form) {
+    if (!pythonReady) {
+        document.getElementById("result").textContent = 'Loading Python (first run only)...';
+    }
+    const api = await loadPython();
+    return JSON.parse(api.calculate_json(JSON.stringify(form)));
+}
+
+if (CONFIG.backend === 'browser') {
+    // Start downloading Python while the form is being filled in. A failure here
+    // is retried, and reported, when Calculate is clicked.
+    loadPython().catch(console.error);
 }
 
 function clearTable() {

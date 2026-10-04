@@ -36,6 +36,26 @@ Make sure the Docker windows up is running.
 $ docker compose up --build
 ```
 
+### Static (no server)
+
+The same page, with the Python in `src/` running in the browser through [Pyodide](https://pyodide.org) instead of Flask. This is what's deployed at [mortgager.eigenomar.com](https://mortgager.eigenomar.com).
+
+```Shell
+$ python3 build_static.py
+$ python3 -m http.server -d dist
+```
+
+Then go to [`localhost:8000`](http://localhost:8000/). The first calculation downloads the Python runtime, so it takes a few seconds.
+
+## Deploy
+
+The static build is served by Cloudflare Workers (see `wrangler.jsonc`). In the Cloudflare dashboard, import this repository under *Workers & Pages → Create → Import a repository* with:
+
+- Build command: `python3 build_static.py`
+- Deploy command: `npx wrangler deploy`
+
+Every push to `main` then redeploys. To deploy from your machine instead: `python3 build_static.py && npx wrangler deploy`.
+
 ## Dev Plan
 
 - Split the initial costs
