@@ -1,0 +1,11 @@
+// Cloudflare Workers config: serves the static build from ./dist.
+// Build it first with `python3 build_static.py`; see README.md.
+{
+  "name": "mortgager",
+  "compatibility_date": "2026-09-30",
+  "assets": {
+    "directory": "./dist"
+  },
+  // Attaches the subdomain to this Worker and creates its DNS record on deploy.
+  "routes": [{ "pattern": "mortgager.eigenomar.com", "custom_domain": true }]
+}
