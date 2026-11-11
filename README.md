@@ -6,31 +6,40 @@ A program to calculate mortgage
 
 Whatever build path you're choosing, you'll go to [`127.0.0.1:5000`](http://127.0.0.1:5000/)
 
+The commands are written for macOS, Linux and WSL. On Windows, type `python` (or `py`) wherever they say `python3`, since `python3` there only opens the Microsoft Store.
+
 ### Native
 
-Use your favourite OS to run python3 natively.
+Use your favourite OS to run Python natively.
 
 ```Shell
-$ pip install --upgrade pip
-$ pip install -r requirements.txt
+$ python3 -m pip install --upgrade pip
+$ python3 -m pip install -r requirements.txt
 $ python3 -m flask run
 ```
 
 ### Virtual environment
 
-Use your favourite OS to run virtual environment.
-
 ```Shell
 $ python3 -m venv .venv
 $ source .venv/bin/activate
-$ pip install --upgrade pip
-$ pip install -r requirements.txt
-$ python3 -m flask run
+$ python -m pip install --upgrade pip
+$ python -m pip install -r requirements.txt
+$ python -m flask run
 ```
 
-### Docker (Windows - WSL)
+On Windows, call the environment's Python directly instead of activating it, because PowerShell blocks `Activate.ps1` by default:
 
-Make sure the Docker windows up is running.
+```PowerShell
+> python -m venv .venv
+> .venv\Scripts\python -m pip install --upgrade pip
+> .venv\Scripts\python -m pip install -r requirements.txt
+> .venv\Scripts\python -m flask run
+```
+
+### Docker
+
+Make sure Docker is running (Docker Desktop on Windows and macOS).
 
 ```Shell
 $ docker compose up --build
@@ -54,7 +63,7 @@ The static build is served by Cloudflare Workers (see `wrangler.jsonc`). In the 
 - Build command: `python3 build_static.py`
 - Deploy command: `npx wrangler deploy`
 
-Every push to `main` then redeploys. To deploy from your machine instead: `python3 build_static.py && npx wrangler deploy`.
+Every push to `main` then redeploys. To deploy from your machine instead, run `python3 build_static.py`, then `npx wrangler deploy` (`npx.cmd wrangler deploy` in Windows PowerShell, which blocks the `npx.ps1` script by default).
 
 ## Dev Plan
 

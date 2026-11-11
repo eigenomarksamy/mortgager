@@ -38,7 +38,9 @@ def main() -> None:
         f'    <script src="https://cdn.jsdelivr.net/pyodide/v{PYODIDE_VERSION}/full/pyodide.js" defer></script>\n'
         f'    {SCRIPT_TAG}'
     )
-    (DIST / 'index.html').write_text(html.replace(SCRIPT_TAG, injected, 1), encoding='utf-8')
+    # newline='\n' so a build on Windows matches one on Linux byte for byte.
+    with open(DIST / 'index.html', 'w', encoding='utf-8', newline='\n') as index:
+        index.write(html.replace(SCRIPT_TAG, injected, 1))
 
     print(f'Built dist/ with {len(python_files)} Python files: {", ".join(python_files)}')
 

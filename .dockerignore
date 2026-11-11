@@ -3,8 +3,10 @@
 **/.venv
 **/.classpath
 **/.dockerignore
+**/.editorconfig
 **/.env
 **/.git
+**/.gitattributes
 **/.gitignore
 **/.project
 **/.settings
