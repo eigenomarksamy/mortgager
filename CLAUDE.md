@@ -78,3 +78,11 @@ plan or anywhere else here.
   repository's other files. To deploy by hand, run `python build_static.py`,
   then `npx wrangler deploy`.
 - the Docker image runs the Flask server locally. It isn't deployed.
+
+## commits
+
+You may commit on a working branch (`feature/…` or `bugfix/…`) once the work
+is verified, and show the changed files, the checks' results and the commit
+message with the commit. Never commit on `main`, and never push, merge,
+release or deploy without the owner's approval: a push or merge to `main`
+deploys. This grant covers only sessions started in this repository.

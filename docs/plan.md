@@ -4,7 +4,7 @@ This is the plan's entry point. It holds the repository's tickets and its
 parked ideas. The app's feature ideas are the [Dev Plan](../README.md#dev-plan)
 list in the README, which stays where it is. Its items have no ids, so they
 aren't tickets yet. The only tickets so far are the ecosystem onboarding,
-EO1–EO8.
+EO1–EO8, all done on 2026-11-14, so nothing is open.
 
 ## How this plan works
 
@@ -41,11 +41,11 @@ EO1–EO8.
 | [EO1](#eo1) | `project.yaml` | S | none | done |
 | [EO2](#eo2) | `CLAUDE.md` with the shared rules | S | none | done |
 | [EO3](#eo3) | the plan in this repository | S | none | done |
-| [EO4](#eo4) | standing approval for commits | S | the owner's decision | todo |
-| [EO5](#eo5) | what covers Linux | S | the owner's decision | todo |
-| [EO6](#eo6) | a fresh install on Windows | S | none | todo |
-| [EO7](#eo7) | Docker on Windows | S | none | todo |
-| [EO8](#eo8) | an issue for every open ticket | S | the owner's approval | todo |
+| [EO4](#eo4) | standing approval for commits | S | the owner's decision | done |
+| [EO5](#eo5) | what covers Linux | S | the owner's decision | done |
+| [EO6](#eo6) | a fresh install on Windows | S | none | done |
+| [EO7](#eo7) | Docker on Windows | S | none | done |
+| [EO8](#eo8) | an issue for every open ticket | S | the owner's approval | done |
 
 ## Ecosystem onboarding
 
@@ -86,13 +86,14 @@ machine's Python 3.11 and Flask 2.3.3, started once from `c:\` and once from
 
 No script is shell-only, no path is absolute, and the only dependency, Flask,
 is pure Python. All 18 tracked files are LF in the index, under
-`.gitattributes`. Not checked: a fresh install from `requirements.txt` and the
-static page in a browser (EO6), and Docker (EO7).
+`.gitattributes`. A fresh install from `requirements.txt`, the static page in a
+browser (EO6) and Docker (EO7) were checked the same day, from both
+spellings, and pass.
 
 There is no CI. Linux is covered by Cloudflare's build, which runs
 `build_static.py` on Linux for every push to `main`, and by the Docker image,
-which runs the server on Linux. No test checks a calculation on either system
-(EO5).
+which runs the server on Linux. No test checks a calculation on either system,
+a gap the owner accepts for now (EO5).
 
 ### Steps
 
@@ -108,7 +109,7 @@ Each step is small and independent, and can be done between other work.
   Plan, at `CLAUDE.md`'s design section, and at the README's Run and Deploy
   sections. It records no CI and no releases, and Cloudflare deploying every
   push to `main`. Its status is `active`. Update it in the same change that
-  moves or adds a document it names.
+  moves or adds a document it names. `68a3549`.
 
 <a id="eo2"></a>
 
@@ -118,8 +119,8 @@ Each step is small and independent, and can be done between other work.
   rules. Without that import, the file and the files it names are still enough
   to set up, run, build and deploy the project.
 - **result:** done 2026-11-14. It was created from the ecosystem's template,
-  with the commands, the plan, the design and the delivery. It grants no
-  standing approval for commits ([EO4](#eo4)).
+  with the commands, the plan, the design and the delivery. It granted no
+  standing approval for commits until [EO4](#eo4). `68a3549`.
 
 <a id="eo3"></a>
 
@@ -131,11 +132,11 @@ Each step is small and independent, and can be done between other work.
 - **result:** done 2026-11-14. The README's Dev Plan stays where it is, as the
   owner chose. Nothing in the repository is confidential (the owner,
   2026-11-14), so nothing moved. [Parked](#parked) holds one idea, the
-  calculation's visualizations.
+  calculation's visualizations. `68a3549`.
 
 <a id="eo4"></a>
 
-#### EO4 · standing approval for commits · todo
+#### EO4 · standing approval for commits · done
 
 - **do:** the owner decides whether Claude sessions started in this repository
   may commit on a working branch once their work is verified. Sessions have
@@ -147,10 +148,14 @@ Each step is small and independent, and can be done between other work.
 - **needs:** the owner's decision.
 - **done when:** `CLAUDE.md` states the grant, or this ticket's result records
   that there is none.
+- **result:** done 2026-11-14. The owner granted it: `CLAUDE.md`'s "commits"
+  section lets a session started here commit on a working branch once its work
+  is verified, and never on `main`. Pushing, merging, releasing and deploying
+  stay the owner's, and a push or merge to `main` deploys.
 
 <a id="eo5"></a>
 
-#### EO5 · what covers Linux · todo
+#### EO5 · what covers Linux · done
 
 - **do:** there is no CI. Cloudflare's build runs `build_static.py` on Linux
   for every push to `main`, and the Docker image runs the server on Linux. But
@@ -161,10 +166,15 @@ Each step is small and independent, and can be done between other work.
 - **needs:** the owner's decision.
 - **done when:** this plan says what covers Linux and which gap it accepts, or
   names the ticket that closes the gap.
+- **result:** done 2026-11-14. The owner accepts the gap for now: Linux is
+  covered by Cloudflare's build, which runs `build_static.py` on every push to
+  `main`, and by the Docker image, which runs the server (checked in EO7), but
+  nothing checks a calculation there. The next ticket that changes the
+  calculation adds a test of `src/api.py`.
 
 <a id="eo6"></a>
 
-#### EO6 · a fresh install on Windows · todo
+#### EO6 · a fresh install on Windows · done
 
 - **do:** the onboarding run checked the code with the Flask 2.3.3 already on
   the machine, and installed nothing. `requirements.txt` pins Flask 2.3.2 and
@@ -181,10 +191,18 @@ Each step is small and independent, and can be done between other work.
       http://127.0.0.1:5000.
     - the static build's preview at http://localhost:8000 calculates in a
       browser.
+- **result:** done 2026-11-14, in a throwaway virtual environment outside the
+  repository, made with the README's commands. It took Flask 2.3.2 with
+  Werkzeug 3.1.9, Jinja2 3.1.6 and click 8.5.1, the newest the pin allows,
+  and nothing broke, so no pin is needed. From `c:\` and from `C:\`, the
+  server served the page, its stylesheet and a calculation, and the static
+  build's preview calculated in headless Edge through Pyodide. Both gave the
+  same breakeven months for the page's default inputs: 53, 22, and none for
+  renting out. `dist/` and the environment were deleted afterwards.
 
 <a id="eo7"></a>
 
-#### EO7 · Docker on Windows · todo
+#### EO7 · Docker on Windows · done
 
 - **do:** Docker Desktop is installed with its WSL 2 backend, and
   `docker compose config` reads `compose.yaml` on Windows. But Docker Desktop
@@ -193,10 +211,14 @@ Each step is small and independent, and can be done between other work.
 - **needs:** nothing.
 - **done when:** on Windows, `docker compose up --build` builds the image and
   serves the page and a calculation at http://127.0.0.1:5000.
+- **result:** done 2026-11-14 with Docker Desktop's engine 24.0.6. From `c:\`
+  and from `C:\`, `docker compose up --build` built the image, and the
+  container served the page, its stylesheet and the same calculation as EO6
+  (53, 22, none). The container and image were removed afterwards.
 
 <a id="eo8"></a>
 
-#### EO8 · an issue for every open ticket · todo
+#### EO8 · an issue for every open ticket · done
 
 - **do:** open one issue in this repository for every open ticket (EO4–EO7 on
   2026-11-14), and add each one to the ecosystem's GitHub Project. The title is
@@ -209,22 +231,23 @@ Each step is small and independent, and can be done between other work.
   sees each issue's text before it is written.
 - **done when:** every open ticket has exactly one issue in the Project, with
   its status, priority and work type set.
+- **result:** done 2026-11-14 with no issues: EO4–EO7 were done at once, as
+  the owner chose, so no ticket is open. A ticket added later gets its issue
+  when it's added.
 
 ### Open questions
 
-1. **EO4, standing approval for commits:** grant it or not? Recommended: grant
-   it. Work here already goes through feature branches, and merging into
-   `main`, which deploys, stays the owner's step.
-2. **EO5, Linux:** accept the gap, or add a test? Recommended: accept it for
-   now. Cloudflare's Linux build runs on every push. Add a test of
-   `src/api.py` with the next ticket that changes the calculation.
-3. **EO8's priorities:** P2 for each of EO4–EO7? Recommended: yes.
-4. **status:** `project.yaml` says `active`, because the Dev Plan holds
-   features still to build. Should it be `maintenance` instead, which means
-   fixes and small changes only? Recommended: `active`.
-5. **GitHub's description:** it reads "a program to calculate mortgage", with
-   no homepage. Should it take `project.yaml`'s description, with
-   https://mortgager.eigenomar.com as the homepage? Recommended: yes.
+All answered by the owner on 2026-11-14:
+
+1. **EO4, standing approval for commits:** granted, on working branches
+   ([EO4](#eo4)).
+2. **EO5, Linux:** the gap is accepted for now, and the next ticket that
+   changes the calculation adds a test of `src/api.py` ([EO5](#eo5)).
+3. **EO8's priorities:** not needed, since EO4–EO7 were done at once and have
+   no issues.
+4. **status:** `active`.
+5. **GitHub's description:** `project.yaml`'s, with
+   https://mortgager.eigenomar.com as the homepage.
 
 ## Parked
 
@@ -237,6 +260,14 @@ up.
 
 ## Log
 
+- 2026-11-14 · EO4–EO8 · Done, as the owner chose. EO4: `CLAUDE.md` grants
+  standing approval for commits on working branches. EO5: the plan accepts
+  that nothing checks a calculation on Linux, for now. EO6: a fresh install in
+  a throwaway environment, with the newest Werkzeug the pin allows, serves and
+  calculates from `c:\` and `C:\`, on the server and in a browser. EO7:
+  `docker compose up --build` serves the page and a calculation from both
+  spellings. EO8 needs no issues, since nothing is open. EO1–EO3's results
+  name `68a3549`. The ecosystem onboarding is complete.
 - 2026-11-14 · plan · Created by the ecosystem onboarding run, with EO1–EO8.
   EO1–EO3 are done: `project.yaml`, which validates, `CLAUDE.md` with the
   shared rules, and this plan, which links the README's Dev Plan and parks
