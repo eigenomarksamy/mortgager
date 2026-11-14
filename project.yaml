@@ -1,0 +1,32 @@
+schema_version: 1
+
+# mortgager's manifest for the eigenomar ecosystem: what this repository is and
+# where its documents are. it points at documents and holds none of their
+# content. update it in the same change that moves or adds one.
+
+id: mortgager
+name: mortgager
+description: a rent-or-buy calculator for the Dutch housing market. it builds an annuity mortgage's monthly schedule and finds the months when buying beats renting, selling turns a profit, and renting out pays off. it runs as a Flask app, or in the browser with Pyodide
+status: active
+tags: [python, flask, pyodide, javascript, docker, cloudflare-workers]
+
+links:
+  deployment: https://mortgager.eigenomar.com
+
+documents:
+  plan: [docs/plan.md, README.md#dev-plan]   # the onboarding tickets and parked ideas; the feature ideas
+  architecture: CLAUDE.md#design
+  engineering: [README.md#run, README.md#deploy]
+  decisions: null
+
+delivery:
+  ci: none                         # no workflows and no tests
+  releases: none                   # no tags or GitHub Releases
+  deployment: cloudflare           # a Worker serving dist/ as static assets (wrangler.jsonc), built by build_static.py
+  deploys_on: merge                # Cloudflare's build deploys every push to main
+
+artifacts:
+  diagrams: null
+  test_reports: null
+  coverage: null
+  monitoring: null
