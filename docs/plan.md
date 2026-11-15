@@ -3,8 +3,9 @@
 This is the plan's entry point. It holds the repository's tickets and its
 parked ideas. The app's feature ideas are the [Dev Plan](../README.md#dev-plan)
 list in the README, which stays where it is. Its items have no ids, so they
-aren't tickets yet. The only tickets so far are the ecosystem onboarding,
-EO1–EO8, all done on 2026-11-14, so nothing is open.
+aren't tickets yet. The ecosystem onboarding, EO1–EO8, was done on
+2026-11-14. The one open ticket is [UI1](#ui1), a modern look for the
+calculator.
 
 ## How this plan works
 
@@ -17,6 +18,7 @@ EO1–EO8, all done on 2026-11-14, so nothing is open.
   | prefix | lane |
   | --- | --- |
   | EO | ecosystem onboarding |
+  | UI | the page: how it looks and how it's used |
 
 - **Each ticket** says what to do, what it needs, and when it is done. Its
   "done when" is its acceptance criteria. Size is a rough guess: S is small,
@@ -46,6 +48,7 @@ EO1–EO8, all done on 2026-11-14, so nothing is open.
 | [EO6](#eo6) | a fresh install on Windows | S | none | done |
 | [EO7](#eo7) | Docker on Windows | S | none | done |
 | [EO8](#eo8) | an issue for every open ticket | S | the owner's approval | done |
+| [UI1](#ui1) | a modern look for the calculator | M | none | open |
 
 ## Ecosystem onboarding
 
@@ -249,6 +252,68 @@ All answered by the owner on 2026-11-14:
 5. **GitHub's description:** `project.yaml`'s, with
    https://mortgager.eigenomar.com as the homepage.
 
+## The page
+
+The page works, but it looks like a bare form: inputs in one long column,
+three breakeven lines, a 3-decimal table and `alert()` for errors. This lane
+makes it look and behave like a tool.
+
+**Stays as it is,** for every ticket in this lane:
+
+- the calculation in `src/`, and what the page sends it: the same field ids,
+  values and defaults, which `src/api.py` parses.
+- one page for both ways: `templates/index.html`, `static/styles.css` and
+  `static/js/script.js`, used by Flask and copied by `build_static.py`, with
+  `<script src="static/js/script.js"` still in the template.
+- plain HTML, CSS and JavaScript: no framework, no build step, and no new
+  dependency or external script, stylesheet or font. Pyodide stays the only
+  thing loaded from a CDN.
+
+A ticket here doesn't change the calculation, so it doesn't need the test of
+`src/api.py` that [EO5](#eo5) asks of the next ticket that does.
+
+### Tickets
+
+<a id="ui1"></a>
+
+#### UI1 · a modern look for the calculator · open
+
+- **do:** restyle the page as a calculator tool:
+    - **inputs** grouped in labelled sections, such as the home and the loan,
+      the buyer, renting, upfront costs and renting out, with aligned labels
+      and their units (€, %, months) beside each field, and a `<form>` so
+      Enter calculates.
+    - **results:** the three breakeven months as cards above the schedule,
+      each with a short line on what it means, and "none" instead of `NA`
+      when a month isn't reached.
+    - **the schedule:** euro amounts with thousands separators and two
+      decimals, a header that stays in view while it scrolls, and its own
+      scroll box, so a narrow screen doesn't scroll the page sideways.
+    - **states:** an error shown in the page instead of an `alert()`, and a
+      loading state while the static page downloads Python on its first
+      calculation.
+    - **layout and theme:** inputs beside the results on a wide screen,
+      stacked on a phone, and light and dark themes that follow the system
+      setting.
+- **not in it:** the footer link to eigenomar.com and the other items in the
+  README's [Dev Plan](../README.md#dev-plan), the [visualizations](#parked),
+  and new inputs. Each stays where it is until it's picked up.
+- **needs:** nothing.
+- **done when,** on the Flask app and on the static build's preview:
+    - the default inputs give the same breakeven months as [EO6](#eo6): 53,
+      22, and none for renting out.
+    - at 375 px wide, the page doesn't scroll sideways, and the schedule
+      scrolls inside its own box.
+    - light and dark follow the system setting, and body text in both has a
+      contrast of at least 4.5:1 (WCAG AA).
+    - every input has a visible label and unit. By keyboard alone, Tab reaches
+      every field and the button, focus is visible, and Enter calculates.
+    - an empty price shows `src/api.py`'s error in the page, with no dialog.
+      The static page's first calculation shows the loading state.
+    - the schedule's amounts have thousands separators and two decimals.
+    - `python build_static.py` succeeds, and `requirements.txt` and the
+      template's external scripts and stylesheets are unchanged.
+
 ## Parked
 
 Ideas without an id. Each one becomes a ticket, with an id, when it's picked
@@ -260,6 +325,9 @@ up.
 
 ## Log
 
+- 2026-11-15 · UI1 · Added, in a new lane for the page, UI: a modern look for
+  the calculator, with the page's layout, results, schedule, errors, loading
+  and themes, and nothing in `src/`. It needs nothing.
 - 2026-11-14 · EO4–EO8 · Done, as the owner chose. EO4: `CLAUDE.md` grants
   standing approval for commits on working branches. EO5: the plan accepts
   that nothing checks a calculation on Linux, for now. EO6: a fresh install in
