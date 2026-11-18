@@ -4,8 +4,9 @@ This is the plan's entry point. It holds the repository's tickets and its
 parked ideas. The app's feature ideas are the [Dev Plan](../README.md#dev-plan)
 list in the README, which stays where it is. Its items have no ids, so they
 aren't tickets yet. The ecosystem onboarding, EO1–EO8, was done on
-2026-11-14. The one open ticket is [UI1](#ui1), a modern look for the
-calculator.
+2026-11-14. The open tickets are [UI1](#ui1), a modern look for the
+calculator, and [DOC1](#doc1) and [SCM1](#scm1), which adopt the ecosystem's
+standards.
 
 ## How this plan works
 
@@ -19,6 +20,8 @@ calculator.
   | --- | --- |
   | EO | ecosystem onboarding |
   | UI | the page: how it looks and how it's used |
+  | DOC | the product's documents: vision, architecture, design, testing strategy, and verification and validation |
+  | SCM | source control and delivery: CI, branching, protection, releases and versioning |
 
 - **Each ticket** says what to do, what it needs, and when it is done. Its
   "done when" is its acceptance criteria. Size is a rough guess: S is small,
@@ -49,6 +52,8 @@ calculator.
 | [EO7](#eo7) | Docker on Windows | S | none | done |
 | [EO8](#eo8) | an issue for every open ticket | S | the owner's approval | done |
 | [UI1](#ui1) | a modern look for the calculator | M | none | open |
+| [DOC1](#doc1) | the product's documents | S | `meta-eigenomar` ST1 | open |
+| [SCM1](#scm1) | the ecosystem's SCM strategy | S | `meta-eigenomar` ST2 | open |
 
 ## Ecosystem onboarding
 
@@ -314,6 +319,49 @@ A ticket here doesn't change the calculation, so it doesn't need the test of
     - `python build_static.py` succeeds, and `requirements.txt` and the
       template's external scripts and stylesheets are unchanged.
 
+## Ecosystem standards
+
+The ecosystem's contract, in `meta-eigenomar`, is adding two standards that
+every repository adopts: the documents each one keeps, and how each one
+manages its source and delivers it. DOC1 and SCM1 adopt them here, each once
+its standard is designed. Until then, their issues stay in the backlog.
+
+### Tickets
+
+<a id="doc1"></a>
+
+#### DOC1 · the product's documents · open
+
+- **do:** write this repository's product vision, architecture, design,
+  testing strategy, and verification and validation (V&V) documents, in the
+  shape the ecosystem's document standard sets. Where a file or section
+  already covers one, name it rather than copy it. Today there is no vision
+  beyond the README's first line, `CLAUDE.md`'s design section is the
+  architecture, and there are no tests: [EO5](#eo5) accepts that gap until the next ticket
+  that changes the calculation adds a test of `src/api.py`. [EO6](#eo6)'s
+  breakeven months, 53, 22 and none, are the one recorded check of the
+  calculation.
+- **needs:** the ecosystem's document standard (`meta-eigenomar` ST1).
+- **done when:** each of the five documents exists, or names the file or
+  section that holds it, and follows the standard's outline. `project.yaml`
+  names them under the standard's keys, and the ecosystem's validator passes.
+  Nothing in them is confidential, since this repository is public.
+
+<a id="scm1"></a>
+
+#### SCM1 · the ecosystem's SCM strategy · open
+
+- **do:** adopt the ecosystem's SCM strategy through its adoption checklist:
+  CI, branching, protection of `main`, versioning and releases, the health
+  report and dependency updates. Today there is no CI or release, Cloudflare's
+  build deploys every push to `main`, and sessions commit on `feature/…` and
+  `bugfix/…` branches under [EO4](#eo4)'s standing approval.
+- **needs:** the ecosystem's SCM strategy (`meta-eigenomar` ST2).
+- **done when:** every item on the checklist is applied here, or recorded here
+  as an exception the strategy allows, with its reason. `project.yaml`'s
+  `delivery` and `CLAUDE.md` say what runs, any workflow passes on `main`, and
+  the ecosystem's validator passes.
+
 ## Parked
 
 Ideas without an id. Each one becomes a ticket, with an id, when it's picked
@@ -325,6 +373,10 @@ up.
 
 ## Log
 
+- 2026-11-18 · DOC1, SCM1 · Added, in two new lanes, at the owner's request:
+  this repository's adoption of the ecosystem's document standard and SCM
+  strategy, which are designed in `meta-eigenomar`. Each needs its standard,
+  so its issue waits in the backlog.
 - 2026-11-15 · UI1 · Added, in a new lane for the page, UI: a modern look for
   the calculator, with the page's layout, results, schedule, errors, loading
   and themes, and nothing in `src/`. It needs nothing.
