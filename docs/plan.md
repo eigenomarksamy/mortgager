@@ -24,8 +24,12 @@ standards.
   | SCM | source control and delivery: CI, branching, protection, releases and versioning |
 
 - **Each ticket** says what to do, what it needs, and when it is done. Its
-  "done when" is its acceptance criteria. Size is a rough guess: S is small,
-  M is medium.
+  "done when" is its acceptance criteria. Its size is on the ecosystem's
+  scale, the same value as its issue's `Size` in the ecosystem's GitHub
+  Project: xxs takes minutes, xs under an hour, s an hour or two, m about a
+  session, l two or three, xl four to six and xxl more. tbd means an open
+  decision or work not yet planned decides it. A change to one is made to the
+  other in the same session.
 - **Issues.** Every open ticket gets one GitHub issue in this repository. The
   issue's title starts with the ticket's id, and its body links the ticket's
   anchor here without copying it. The ticket holds the scope and history, and
@@ -43,17 +47,17 @@ standards.
 
 | ticket | title | size | needs | status |
 | --- | --- | --- | --- | --- |
-| [EO1](#eo1) | `project.yaml` | S | none | done |
-| [EO2](#eo2) | `CLAUDE.md` with the shared rules | S | none | done |
-| [EO3](#eo3) | the plan in this repository | S | none | done |
-| [EO4](#eo4) | standing approval for commits | S | the owner's decision | done |
-| [EO5](#eo5) | what covers Linux | S | the owner's decision | done |
-| [EO6](#eo6) | a fresh install on Windows | S | none | done |
-| [EO7](#eo7) | Docker on Windows | S | none | done |
-| [EO8](#eo8) | an issue for every open ticket | S | the owner's approval | done |
-| [UI1](#ui1) | a modern look for the calculator | M | none | open |
-| [DOC1](#doc1) | the product's documents | S | `meta-eigenomar` ST1 | open |
-| [SCM1](#scm1) | the ecosystem's SCM strategy | S | `meta-eigenomar` ST2 | open |
+| [EO1](#eo1) | `project.yaml` | s | none | done |
+| [EO2](#eo2) | `CLAUDE.md` with the shared rules | s | none | done |
+| [EO3](#eo3) | the plan in this repository | s | none | done |
+| [EO4](#eo4) | standing approval for commits | s | the owner's decision | done |
+| [EO5](#eo5) | what covers Linux | s | the owner's decision | done |
+| [EO6](#eo6) | a fresh install on Windows | s | none | done |
+| [EO7](#eo7) | Docker on Windows | s | none | done |
+| [EO8](#eo8) | an issue for every open ticket | s | the owner's approval | done |
+| [UI1](#ui1) | a modern look for the calculator | m | none | open |
+| [DOC1](#doc1) | the product's documents | tbd | `meta-eigenomar` ST1 | open |
+| [SCM1](#scm1) | the ecosystem's SCM strategy | tbd | `meta-eigenomar` ST2 | open |
 
 ## Ecosystem onboarding
 
