@@ -5,8 +5,8 @@ parked ideas. The app's feature ideas are the [Dev Plan](../README.md#dev-plan)
 list in the README, which stays where it is. Its items have no ids, so they
 aren't tickets yet. The ecosystem onboarding, EO1–EO8, was done on
 2026-11-14. The open tickets are [UI1](#ui1), a modern look for the
-calculator, and [DOC1](#doc1) and [SCM1](#scm1), which adopt the ecosystem's
-standards.
+calculator, [UI2](#ui2), the ecosystem's tab icon, and [DOC1](#doc1) and
+[SCM1](#scm1), which adopt the ecosystem's standards.
 
 ## How this plan works
 
@@ -56,6 +56,7 @@ standards.
 | [EO7](#eo7) | Docker on Windows | s | none | done |
 | [EO8](#eo8) | an issue for every open ticket | s | the owner's approval | done |
 | [UI1](#ui1) | a modern look for the calculator | m | none | open |
+| [UI2](#ui2) | the ecosystem's tab icon | xs | none | open |
 | [DOC1](#doc1) | the product's documents | tbd | `meta-eigenomar` ST1 | open |
 | [SCM1](#scm1) | the ecosystem's SCM strategy | tbd | `meta-eigenomar` ST2 | open |
 
@@ -323,6 +324,24 @@ A ticket here doesn't change the calculation, so it doesn't need the test of
     - `python build_static.py` succeeds, and `requirements.txt` and the
       template's external scripts and stylesheets are unchanged.
 
+<a id="ui2"></a>
+
+#### UI2 · the ecosystem's tab icon · open
+
+- **do:** every app under eigenomar.com shows the same tab icon:
+  eigenomar.com's lambda with its two colors swapped, a light-blue tile and a
+  near-black lambda (shared decision SD5). The page has none today. Add it as
+  `static/favicon.svg`, and link it from `templates/index.html` with
+  `<link rel="icon" type="image/svg+xml" href="static/favicon.svg">`, a
+  relative path like the stylesheet's. Flask serves it from `static/`, and
+  `build_static.py` already copies that folder into `dist/`, so neither
+  changes.
+- **needs:** nothing. It touches one line of the template, so it fits before,
+  after or inside [UI1](#ui1).
+- **done when:** the tab shows the icon on the Flask app, on the static
+  build's preview and at mortgager.eigenomar.com, in a light and a dark
+  browser theme, and `python build_static.py` succeeds.
+
 ## Ecosystem standards
 
 The ecosystem's contract, in `meta-eigenomar`, is adding two standards that
@@ -377,6 +396,9 @@ up.
 
 ## Log
 
+- 2026-11-20 · UI2 · Added at the owner's request: every app under
+  eigenomar.com shares one tab icon, eigenomar.com's lambda with its colors
+  swapped (shared decision SD5). The page has none, so UI2 adds it.
 - 2026-11-18 · DOC1, SCM1 · Added, in two new lanes, at the owner's request:
   this repository's adoption of the ecosystem's document standard and SCM
   strategy, which are designed in `meta-eigenomar`. Each needs its standard,
