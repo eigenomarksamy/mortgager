@@ -3,91 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" type="image/svg+xml" href="static/favicon.svg">
     <link rel="stylesheet" href="static/styles.css">
     <script src="static/js/script.js" defer></script>
     <title>Mortgager</title>
 </head>
 <body>
-    <div class="container">
-        <div class="mortgager">
-            <div class="input-group">
-                <label for="price">Price:</label>
-                <input type="number" id="price" value="425000.0">
+    <header class="masthead">
+        <h1>Mortgager</h1>
+        <p>Rent or buy in the Netherlands: an annuity mortgage, month by month.</p>
+    </header>
+
+    <main class="layout">
+        <form id="mortgage-form" class="inputs" novalidate>
+            <fieldset>
+                <legend>The home and the loan</legend>
+                <div class="field">
+                    <label for="price">Price</label>
+                    <div class="control"><span class="unit unit-before">€</span><input type="number" id="price" value="425000.0" step="any" inputmode="decimal"></div>
+                </div>
+                <div class="field">
+                    <label for="num_of_months">Term</label>
+                    <div class="control"><input type="number" id="num_of_months" value="360" step="1" inputmode="numeric"><span class="unit">months</span></div>
+                </div>
+                <div class="field">
+                    <label for="interest_rate">Interest rate</label>
+                    <div class="control"><input type="number" id="interest_rate" value="4.0" step="any" inputmode="decimal"><span class="unit">% a year</span></div>
+                </div>
+                <div class="field">
+                    <label for="housing_inflation">Housing market inflation</label>
+                    <div class="control"><input type="number" id="housing_inflation" value="3.0" step="any" inputmode="decimal"><span class="unit">% a year</span></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>The buyer</legend>
+                <div class="check">
+                    <input type="checkbox" id="is_first_estate">
+                    <label for="is_first_estate">First home</label>
+                </div>
+                <div class="check">
+                    <input type="checkbox" id="older_than_35">
+                    <label for="older_than_35">35 or older</label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Renting</legend>
+                <div class="field">
+                    <label for="rent_month">Rent</label>
+                    <div class="control"><span class="unit unit-before">€</span><input type="number" id="rent_month" value="1800.0" step="any" inputmode="decimal"><span class="unit">a month</span></div>
+                </div>
+                <div class="field">
+                    <label for="rent_increase">Rent increase</label>
+                    <div class="control"><input type="number" id="rent_increase" value="8.0" step="any" inputmode="decimal"><span class="unit">% a year</span></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Upfront costs</legend>
+                <div class="field">
+                    <label for="overbidding">Overbidding</label>
+                    <div class="control"><span class="unit unit-before">€</span><input type="number" id="overbidding" value="5000" step="any" inputmode="decimal"></div>
+                </div>
+                <div class="field">
+                    <label for="property_fixup">Fixing up the home</label>
+                    <div class="control"><span class="unit unit-before">€</span><input type="number" id="property_fixup" value="5000" step="any" inputmode="decimal"></div>
+                </div>
+                <div class="field">
+                    <label for="realtor_fee">Realtor and agent fees</label>
+                    <div class="control"><input type="number" id="realtor_fee" value="6.0" step="any" inputmode="decimal"><span class="unit">% of price</span></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Renting out</legend>
+                <div class="field">
+                    <label for="rent_return_month">Rent received</label>
+                    <div class="control"><span class="unit unit-before">€</span><input type="number" id="rent_return_month" value="1800.0" step="any" inputmode="decimal"><span class="unit">a month</span></div>
+                </div>
+                <div class="field">
+                    <label for="rental_term">Rental option</label>
+                    <div class="control">
+                        <select id="rental_term">
+                            <option value="no_term">No-term</option>
+                            <option value="long_term">Long-term</option>
+                            <option value="short_term">Short-term</option>
+                            <option value="mixed_term">Mixed</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <button type="submit" id="calculate">Calculate</button>
+        </form>
+
+        <section class="results" aria-labelledby="results-heading">
+            <h2 id="results-heading" class="visually-hidden">Results</h2>
+            <div id="status" class="status" role="status" aria-live="polite">Press Calculate, or Enter in any field, to see when buying pays off.</div>
+            <div id="error" class="error" role="alert" hidden></div>
+
+            <div class="cards">
+                <article class="card">
+                    <h3>Rent breakeven</h3>
+                    <p class="card-value" id="textAValue">–</p>
+                    <p class="card-note">The month when buying beats renting: the rent paid so far passes the interest and upfront costs of buying.</p>
+                </article>
+                <article class="card">
+                    <h3>Sell breakeven</h3>
+                    <p class="card-value" id="textBValue">–</p>
+                    <p class="card-note">The month when selling would turn a profit: the home's value passes the debt left and the upfront costs.</p>
+                </article>
+                <article class="card">
+                    <h3>Rent-out breakeven</h3>
+                    <p class="card-value" id="textCValue">–</p>
+                    <p class="card-note">The month when renting the home out pays off: the rent received, less its costs, passes the debt left.</p>
+                </article>
             </div>
 
-            <div class="input-group">
-                <label for="is_first_estate">First Estate</label>
-                <input type="checkbox" id="is_first_estate">
+            <div class="schedule">
+                <div class="schedule-head">
+                    <h3>Schedule</h3>
+                    <p>Amounts in €</p>
+                </div>
+                <div id="result" class="table-scroll" tabindex="0" aria-label="Monthly schedule"></div>
             </div>
-
-            <div class="input-group">
-                <label for="older_than_35">35 or older</label>
-                <input type="checkbox" id="older_than_35">
-            </div>
-
-            <div class="input-group">
-                <label for="num_of_months">Number of months:</label>
-                <input type="number" id="num_of_months" value="360">
-            </div>
-
-            <div class="input-group">
-                <label for="interest_rate">Interest rate (%):</label>
-                <input type="number" id="interest_rate" value="4.0">
-            </div>
-
-            <div class="input-group">
-                <label for="housing_inflation">Housing market inflation (%):</label>
-                <input type="number" id="housing_inflation" value="3.0">
-            </div>
-
-            <div class="input-group">
-                <label for="rent_month">Rent per month:</label>
-                <input type="number" id="rent_month" value="1800.0">
-            </div>
-
-            <div class="input-group">
-                <label for="overbidding">Initial overbidding:</label>
-                <input type="number" id="overbidding" value="5000">
-            </div>
-
-            <div class="input-group">
-                <label for="property_fixup">Initial property fixups:</label>
-                <input type="number" id="property_fixup" value="5000">
-            </div>
-
-            <div class="input-group">
-                <label for="realtor_fee">Realtor/Agent fees (%):</label>
-                <input type="number" id="realtor_fee" value="6.0">
-            </div>
-
-            <div class="input-group">
-                <label for="rent_increase">Rent annual increase (%):</label>
-                <input type="number" id="rent_increase" value="8.0">
-            </div>
-
-            <div class="input-group">
-                <label for="rent_return_month">Rent return per month:</label>
-                <input type="number" id="rent_return_month" value="1800.0">
-            </div>
-
-            <label for="rental_term">Rental option:</label>
-            <select id="rental_term">
-                <option value="no_term">No-term</option>
-                <option value="long_term">Long-term</option>
-                <option value="short_term">Short-term</option>
-                <option value="mixed_term">Mixed</option>
-            </select>
-            <br>
-
-            <button onclick="submitForm()">Calculate</button>
-            <div id="dynamic-elements">
-                <p>Rent breakeven month: <span id="textAValue"></span></p>
-                <p>Sell breakeven month: <span id="textBValue"></span></p>
-                <p>Rent out breakeven month: <span id="textCValue"></span></p>
-            </div>
-
-            <div id="result"></div>
-        </div>
-    </div>
+        </section>
+    </main>
 </body>
 </html>
