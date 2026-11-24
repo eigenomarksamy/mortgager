@@ -1,80 +1,410 @@
+/* Colours follow eigenomar.com's palette, light and dark by the system setting. */
+:root {
+    color-scheme: light dark;
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --surface-2: #efede6;
+    --fg: #19191d;
+    --muted: #5c5c64;
+    --border: #dddbd2;
+    --accent: #33689e;
+    --accent-fg: #ffffff;
+    --error-bg: #fbe9ea;
+    --error-fg: #8f1622;
+    --error-border: #e6b3b8;
+    --radius: 10px;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0f0f12;
+        --surface: #18181c;
+        --surface-2: #202026;
+        --fg: #ebebee;
+        --muted: #a2a2ac;
+        --border: #2a2a30;
+        --accent: #8fb6e3;
+        --accent-fg: #0f0f12;
+        --error-bg: #3a1418;
+        --error-fg: #ffb3b8;
+        --error-border: #6b2a31;
+    }
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+h1, h2, h3, p {
     margin: 0;
 }
 
-.container {
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Header */
+
+.masthead {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 0.5rem;
+}
+
+.masthead h1 {
+    font-size: 1.75rem;
+    letter-spacing: -0.01em;
+}
+
+.masthead p {
+    color: var(--muted);
+}
+
+/* Layout: inputs beside the results on a wide screen, stacked on a narrow one. */
+
+.layout {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 960px) {
+    .layout {
+        grid-template-columns: 380px minmax(0, 1fr);
+        align-items: start;
+    }
+}
+
+/* Inputs */
+
+.inputs {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0.75rem 1rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    min-width: 0;
+    display: grid;
+    gap: 0.625rem;
+}
+
+legend {
+    padding: 0 0.375rem;
+    margin-left: -0.375rem;
+    font-weight: 600;
+}
+
+.field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.field label {
+    color: var(--fg);
+}
+
+.control {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 98%; /* Adjust as needed */
+    align-items: center;
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
 }
 
-.mortgager {
-    text-align: left;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 96%; /* Adjust as needed */
+.control:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
 }
 
-#dynamic-elements {
-    width: 70%;
+.control input,
+.control select {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    padding: 0.5rem 0.625rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--fg);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+}
+
+.control select {
+    cursor: pointer;
+}
+
+/* The control's border shows focus, so its field needs no second ring. */
+.control input:focus-visible,
+.control select:focus-visible {
+    outline: none;
+}
+
+.control select option {
+    background: var(--surface);
+    color: var(--fg);
+}
+
+.unit {
+    flex: 0 0 auto;
+    padding: 0 0.625rem 0 0;
+    color: var(--muted);
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.unit-before {
+    padding: 0 0 0 0.625rem;
+}
+
+.check {
     display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 20px;
+    align-items: center;
+    gap: 0.625rem;
 }
 
-.input-group {
-    display: flex;
-    align-items: left;
-    margin-bottom: 10px;
-}
-
-label {
-    margin-right: 10px;
-}
-
-input {
-    margin-left: 5px;
+.check input {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin: 0;
+    accent-color: var(--accent);
 }
 
 button {
-    margin-top: 10px;
+    justify-self: stretch;
+    padding: 0.75rem 1rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: var(--accent-fg);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-#result {
-    min-height: 400px; /* Adjust the height based on your needs */
+button:hover {
+    filter: brightness(1.08);
+}
+
+button:disabled {
+    cursor: progress;
+    opacity: 0.75;
+}
+
+/* Results */
+
+.results {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.status {
+    color: var(--muted);
+    min-height: 1.5em;
+}
+
+.status.loading::before {
+    content: "";
+    display: inline-block;
+    width: 0.875em;
+    height: 0.875em;
+    margin-right: 0.5em;
+    vertical-align: -0.1em;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status.loading::before {
+        animation: none;
+    }
+}
+
+.error {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--error-border);
+    border-radius: var(--radius);
+    background: var(--error-bg);
+    color: var(--error-fg);
+}
+
+.cards {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.card {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+.card h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.card-value {
+    margin: 0.25rem 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.card-value small {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--muted);
+}
+
+.card-note {
+    color: var(--muted);
+    font-size: 0.875rem;
+}
+
+.schedule {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    min-width: 0;
+    overflow: hidden;
+}
+
+.schedule-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.schedule-head h3 {
+    font-size: 1rem;
+}
+
+.schedule-head p {
+    color: var(--muted);
+    font-size: 0.875rem;
+}
+
+/* The schedule scrolls in its own box, both ways, so the page never scrolls sideways. */
+.table-scroll {
+    max-height: 70vh;
     overflow: auto;
+}
+
+.table-scroll:empty::before {
+    content: "The schedule shows here after a calculation.";
+    display: block;
+    padding: 1rem;
+    color: var(--muted);
+}
+
+.table-scroll p {
+    padding: 1rem;
+    color: var(--muted);
 }
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+    padding: 0.5rem 0.75rem;
+    text-align: right;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border);
 }
 
-th {
-    background-color: #f2f2f2;
+thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--surface-2);
+    font-weight: 600;
+    white-space: normal;
+    min-width: 7.5rem;
+    vertical-align: bottom;
 }
 
-.even-row {
-    background-color: #f9f9f9; /* Even row color */
+/* The month column stays in view while the schedule scrolls sideways. */
+th:first-child,
+td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    min-width: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
 }
 
-.odd-row {
-    background-color: #ffffff; /* Odd row color */
+thead th:first-child {
+    z-index: 3;
+    background: var(--surface-2);
 }
 
-#textAValue, #textBValue, #textCValue {
-    margin-left: 5px;
+tbody th {
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) > * {
+    background: var(--surface-2);
+}
+
+tbody tr:hover > * {
+    background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+td.negative {
+    color: var(--error-fg);
 }

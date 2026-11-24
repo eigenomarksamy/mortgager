@@ -4,9 +4,9 @@ This is the plan's entry point. It holds the repository's tickets and its
 parked ideas. The app's feature ideas are the [Dev Plan](../README.md#dev-plan)
 list in the README, which stays where it is. Its items have no ids, so they
 aren't tickets yet. The ecosystem onboarding, EO1–EO8, was done on
-2026-11-14. The open tickets are [UI1](#ui1), a modern look for the
-calculator, [UI2](#ui2), the ecosystem's tab icon, and [DOC1](#doc1) and
-[SCM1](#scm1), which adopt the ecosystem's standards.
+2026-11-14, and [UI1](#ui1), a modern look for the calculator, on
+2026-11-24. The open tickets are [UI2](#ui2), the ecosystem's tab icon, and
+[DOC1](#doc1) and [SCM1](#scm1), which adopt the ecosystem's standards.
 
 ## How this plan works
 
@@ -55,7 +55,7 @@ calculator, [UI2](#ui2), the ecosystem's tab icon, and [DOC1](#doc1) and
 | [EO6](#eo6) | a fresh install on Windows | s | none | done |
 | [EO7](#eo7) | Docker on Windows | s | none | done |
 | [EO8](#eo8) | an issue for every open ticket | s | the owner's approval | done |
-| [UI1](#ui1) | a modern look for the calculator | m | none | open |
+| [UI1](#ui1) | a modern look for the calculator | m | none | done |
 | [UI2](#ui2) | the ecosystem's tab icon | xs | none | open |
 | [DOC1](#doc1) | the product's documents | tbd | `meta-eigenomar` ST1 | open |
 | [SCM1](#scm1) | the ecosystem's SCM strategy | tbd | `meta-eigenomar` ST2 | open |
@@ -286,7 +286,7 @@ A ticket here doesn't change the calculation, so it doesn't need the test of
 
 <a id="ui1"></a>
 
-#### UI1 · a modern look for the calculator · open
+#### UI1 · a modern look for the calculator · done
 
 - **do:** restyle the page as a calculator tool:
     - **inputs** grouped in labelled sections, such as the home and the loan,
@@ -323,6 +323,20 @@ A ticket here doesn't change the calculation, so it doesn't need the test of
     - the schedule's amounts have thousands separators and two decimals.
     - `python build_static.py` succeeds, and `requirements.txt` and the
       template's external scripts and stylesheets are unchanged.
+- **result:** done 2026-11-24, on `feature/ui1-modern-look`, in
+  `templates/index.html`, `static/styles.css` and `static/js/script.js`
+  only. The inputs are in five fieldsets with their units, inside a
+  `<form>`. The breakeven months are cards that also give years and months,
+  and "none" when a month isn't reached. The schedule is a table with a
+  sticky header and month column, in its own scroll box. Errors and the
+  loading state show in the page, and the colours are eigenomar.com's, light
+  and dark. When the price is too high for a first home, the schedule area
+  says so. Every "done when" was checked in headless Edge, on the Flask app
+  and the static build's preview, in light and dark: 53, 22 and none; a
+  375 px page that doesn't scroll sideways; 15 controls reached by Tab with
+  focus visible; `src/api.py`'s error for an empty price, with no dialog;
+  and the loading state on the static page's first calculation. Body and
+  muted text measure at least 5.37:1 in both themes.
 
 <a id="ui2"></a>
 
@@ -396,6 +410,11 @@ up.
 
 ## Log
 
+- 2026-11-24 · UI1 · Done on `feature/ui1-modern-look`: the page restyled
+  as a calculator tool, with grouped inputs and units, breakeven cards, a
+  formatted schedule in its own scroll box, in-page errors and loading, and
+  light and dark themes. Nothing in `src/` changed. Checked on the Flask app
+  and the static build.
 - 2026-11-20 · UI2 · Added at the owner's request: every app under
   eigenomar.com shares one tab icon, eigenomar.com's lambda with its colors
   swapped (shared decision SD5). The page has none, so UI2 adds it.
