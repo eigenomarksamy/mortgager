@@ -6,7 +6,7 @@ list in the README, which stays where it is. Its items have no ids, so they
 aren't tickets yet. The ecosystem onboarding, EO1–EO8, was done on
 2026-11-14, and [UI1](#ui1), a modern look for the calculator, and
 [UI2](#ui2), the ecosystem's tab icon, on 2026-11-24. The open tickets are
-[DOC1](#doc1) and [SCM1](#scm1), which adopt the ecosystem's standards.
+[DOC5](#doc5) and [SCM5](#scm5), which adopt the ecosystem's standards.
 
 ## How this plan works
 
@@ -57,8 +57,8 @@ aren't tickets yet. The ecosystem onboarding, EO1–EO8, was done on
 | [EO8](#eo8) | an issue for every open ticket | s | the owner's approval | done |
 | [UI1](#ui1) | a modern look for the calculator | m | none | done |
 | [UI2](#ui2) | the ecosystem's tab icon | xs | none | done |
-| [DOC1](#doc1) | the product's documents | tbd | `meta-eigenomar` ST1 | open |
-| [SCM1](#scm1) | the ecosystem's SCM strategy | tbd | `meta-eigenomar` ST2 | open |
+| [DOC5](#doc5) | the product's documents | tbd | `meta-eigenomar` ST1 | open |
+| [SCM5](#scm5) | the ecosystem's SCM strategy | tbd | `meta-eigenomar` ST2 | open |
 
 ## Ecosystem onboarding
 
@@ -370,14 +370,14 @@ A ticket here doesn't change the calculation, so it doesn't need the test of
 
 The ecosystem's contract, in `meta-eigenomar`, is adding two standards that
 every repository adopts: the documents each one keeps, and how each one
-manages its source and delivers it. DOC1 and SCM1 adopt them here, each once
+manages its source and delivers it. DOC5 and SCM5 adopt them here, each once
 its standard is designed. Until then, their issues stay in the backlog.
 
 ### Tickets
 
-<a id="doc1"></a>
+<a id="doc5"></a>
 
-#### DOC1 · the product's documents · open
+#### DOC5 · the product's documents · open
 
 - **do:** write this repository's product vision, architecture, design,
   testing strategy, and verification and validation (V&V) documents, in the
@@ -394,9 +394,9 @@ its standard is designed. Until then, their issues stay in the backlog.
   names them under the standard's keys, and the ecosystem's validator passes.
   Nothing in them is confidential, since this repository is public.
 
-<a id="scm1"></a>
+<a id="scm5"></a>
 
-#### SCM1 · the ecosystem's SCM strategy · open
+#### SCM5 · the ecosystem's SCM strategy · open
 
 - **do:** adopt the ecosystem's SCM strategy through its adoption checklist:
   CI, branching, protection of `main`, versioning and releases, the health
@@ -420,6 +420,10 @@ up.
 
 ## Log
 
+- 2026-11-26 · DOC5, SCM5 · Renamed from `DOC1` and `SCM1`, since the
+  ecosystem's lanes are numbered across its repositories. Their anchors,
+  headings, index rows and issues changed with them, and the log keeps the ids
+  it was written with.
 - 2026-11-24 · UI1, UI2 · Merged in `84f65db` and deployed. The UI1 checks
   and the icon pass at mortgager.eigenomar.com, and both issues are closed.
 - 2026-11-24 · UI2 · Built on `feature/ui1-modern-look`, `a4a086f`: the
