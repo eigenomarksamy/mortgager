@@ -158,7 +158,7 @@ Each step is small and independent, and can be done between other work.
 
 #### EO4 · standing approval for commits · done
 
-- **do:** the owner decides whether Claude sessions started in this repository
+- **do:** the owner decided whether Claude sessions started in this repository
   may commit on a working branch once their work is verified. Sessions have
   committed here before: the static build and its merge, on 2026-10-04. A
   grant is never inferred from that. If the owner grants it, add a "commits"
