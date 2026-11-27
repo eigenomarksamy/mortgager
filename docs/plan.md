@@ -390,7 +390,8 @@ A ticket here doesn't change the calculation, so it doesn't need the test of
   `templates/index.html` and `static/styles.css`. The link has the
   Calculate button's shape but is quiet, a surface fill with a border and
   the accent's text, so Calculate stays the page's one filled button. The
-  item left the README's Dev Plan. Checked with [UI4](#ui4).
+  item left the README's Dev Plan. Checked with [UI4](#ui4). `8e0538a`,
+  merged in `b428abc` and deployed the same day.
 
 <a id="ui4"></a>
 
@@ -418,8 +419,9 @@ A ticket here doesn't change the calculation, so it doesn't need the test of
   in the page; the footer's link goes to eigenomar.com with no target; and
   no width scrolls sideways. The static build's stylesheet is the same
   file, and its page differs from the template only by the two script lines
-  `build_static.py` injects. The static preview wasn't opened in a browser
-  this time.
+  `build_static.py` injects. `8e0538a`, merged in `b428abc` and deployed the
+  same day, where the same checks pass at mortgager.eigenomar.com, through
+  Pyodide. The static build's local preview wasn't opened in a browser.
 
 ## Ecosystem standards
 
@@ -503,6 +505,8 @@ up.
 
 ## Log
 
+- 2026-11-27 · UI3, UI4 · Merged in `b428abc` and deployed. The checks pass
+  at mortgager.eigenomar.com, in light and dark, at 1280 and 375 px.
 - 2026-11-27 · UI3, UI4 · Added and done at the owner's request, from a
   session in `meta-eigenomar`, on `feature/ui3-ui4-footer-lowercase`: a
   footer link to eigenomar.com, which left the README's Dev Plan, and the
