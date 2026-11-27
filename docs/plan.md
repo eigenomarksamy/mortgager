@@ -5,7 +5,9 @@ parked ideas. The app's feature ideas are the [Dev Plan](../README.md#dev-plan)
 list in the README, which stays where it is. Its items have no ids, so they
 aren't tickets yet. The ecosystem onboarding, EO1–EO8, was done on
 2026-11-14, and [UI1](#ui1), a modern look for the calculator, and
-[UI2](#ui2), the ecosystem's tab icon, on 2026-11-24. The open tickets are
+[UI2](#ui2), the ecosystem's tab icon, on 2026-11-24, and [UI3](#ui3), the
+footer's link to eigenomar.com, and [UI4](#ui4), the lowercase page, on
+2026-11-27. The open tickets are
 [DOC5](#doc5) and [SCM5](#scm5), which adopt the ecosystem's standards, and
 [MIG5](#mig5), which moves this plan's tickets into their GitHub issues.
 
@@ -59,6 +61,8 @@ aren't tickets yet. The ecosystem onboarding, EO1–EO8, was done on
 | [EO8](#eo8) | an issue for every open ticket | s | the owner's approval | done |
 | [UI1](#ui1) | a modern look for the calculator | m | none | done |
 | [UI2](#ui2) | the ecosystem's tab icon | xs | none | done |
+| [UI3](#ui3) | a footer link to eigenomar.com | xs | none | done |
+| [UI4](#ui4) | the page in lowercase | xs | none | done |
 | [DOC5](#doc5) | the product's documents | tbd | `meta-eigenomar` ST1 | open |
 | [SCM5](#scm5) | the ecosystem's SCM strategy | tbd | `meta-eigenomar` ST2 | open |
 | [MIG5](#mig5) | the backlog moves into GitHub issues | xs | `meta-eigenomar` ST3 | open |
@@ -369,6 +373,54 @@ A ticket here doesn't change the calculation, so it doesn't need the test of
   Edge has no tab strip, so the tab itself is left to the eye. `a4a086f`,
   merged in `84f65db`.
 
+<a id="ui3"></a>
+
+#### UI3 · a footer link to eigenomar.com · done
+
+- **do:** add a footer after the page's `<main>` in `templates/index.html`,
+  with a button-like link to [eigenomar.com](https://eigenomar.com) that opens in the same
+  tab, as the README's Dev Plan item asked. The ecosystem's other apps have
+  the same "eigenomar.com" button in their footers.
+- **needs:** nothing.
+- **done when:** on the Flask app and the static build, the footer's link
+  shows below the inputs and results in light and dark, goes to
+  eigenomar.com in the same tab, and doesn't make a 375 px page scroll
+  sideways. `python build_static.py` succeeds.
+- **result:** done 2026-11-27, on `feature/ui3-ui4-footer-lowercase`, in
+  `templates/index.html` and `static/styles.css`. The link has the
+  Calculate button's shape but is quiet, a surface fill with a border and
+  the accent's text, so Calculate stays the page's one filled button. The
+  item left the README's Dev Plan. Checked with [UI4](#ui4).
+
+<a id="ui4"></a>
+
+#### UI4 · the page in lowercase · done
+
+- **do:** show the page's text in lowercase, as eigenomar.com does: the
+  heading, legends, labels, units, cards, the schedule's headers, the
+  button, the rental options, and the status and error messages. The
+  schedule's headers and the error come from `src/`, which stays as it is,
+  so a CSS rule lowercases them, as eigenomar.com's and selecta's do, and the
+  `<title>`, which CSS doesn't reach, is written lowercase. Nothing on the
+  page needs its case kept: it has no acronyms, and the inputs are numbers.
+- **needs:** nothing.
+- **done when:** on the Flask app and the static build, in light and dark,
+  every text on the page and the tab's title show in lowercase, the default
+  inputs still give 53, 22 and none, and `python build_static.py` succeeds.
+- **result:** done 2026-11-27, on `feature/ui3-ui4-footer-lowercase`, in
+  `templates/index.html` and `static/styles.css`. `body` has
+  `text-transform: lowercase`, and `button`, `select` and `option` take it
+  too, since the browser's own stylesheet resets them. The cards' headings
+  lost their uppercase. In headless Edge on the Flask app, at 1280 and
+  375 px in light and dark: the title, heading, legends, button, rental
+  options, cards, schedule headers and status are lowercase; 53, 22 and
+  none; an empty price shows "invalid input. please enter valid numbers."
+  in the page; the footer's link goes to eigenomar.com with no target; and
+  no width scrolls sideways. The static build's stylesheet is the same
+  file, and its page differs from the template only by the two script lines
+  `build_static.py` injects. The static preview wasn't opened in a browser
+  this time.
+
 ## Ecosystem standards
 
 The ecosystem's contract, in `meta-eigenomar`, is adding two standards that
@@ -451,6 +503,11 @@ up.
 
 ## Log
 
+- 2026-11-27 · UI3, UI4 · Added and done at the owner's request, from a
+  session in `meta-eigenomar`, on `feature/ui3-ui4-footer-lowercase`: a
+  footer link to eigenomar.com, which left the README's Dev Plan, and the
+  page's text in lowercase, as eigenomar.com's. Done at once, so neither has
+  an issue. Nothing in `src/` changed. Checked on the Flask app.
 - 2026-11-27 · MIG5 · Added, in a new lane, at the owner's request: this
   repository's cutover to GitHub as the home of its backlog, the ecosystem's
   standard `meta-eigenomar` ST3, whose decisions were made that day. It needs
