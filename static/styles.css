@@ -43,6 +43,19 @@ body {
     font-family: var(--font);
     font-size: 1rem;
     line-height: 1.5;
+    /* The page's text is lowercase, as on eigenomar.com: headings, labels,
+       units, the schedule's headers from src/ and the messages. A rule rather
+       than lowercased strings, since the headers and errors come from src/.
+       The page's <title> isn't styled, so the template writes it lowercase. */
+    text-transform: lowercase;
+}
+
+/* The browser's own stylesheet gives form controls text-transform: none, so
+   the button and the rental option's choices take the page's case here. */
+button,
+select,
+option {
+    text-transform: lowercase;
 }
 
 h1, h2, h3, p {
@@ -284,8 +297,6 @@ button:disabled {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
 }
 
 .card-value {
@@ -407,4 +418,29 @@ tbody tr:hover > * {
 
 td.negative {
     color: var(--error-fg);
+}
+
+/* Footer: a link to eigenomar.com, shaped like the page's button but quiet,
+   so Calculate stays the one filled button. */
+
+.site-footer {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0.5rem 1rem 2rem;
+    text-align: center;
+}
+
+.button-link {
+    display: inline-block;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.button-link:hover {
+    border-color: var(--accent);
 }

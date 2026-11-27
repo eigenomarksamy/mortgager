@@ -74,6 +74,3 @@ Every push to `main` then redeploys. To deploy from your machine instead, run `p
     - [resource3](https://www.iamexpat.nl/housing/dutch-mortgages/fees-costs-tax-relief-netherlands)
 - Add monthly charges (e.g., [for an actual property](https://huispedia.nl/eindhoven/5615pa/hoogstraat/39-03#finance))
 - Add huispedia API integration
-- Add a button in a page footer that goes to [eigenomar.com](https://eigenomar.com)
-  - The page has no footer yet, so add one after `.container` in `templates/index.html`. Flask and `build_static.py` both use that file
-  - A plain link styled like the page's `button` in `static/styles.css`, opening in the same tab
